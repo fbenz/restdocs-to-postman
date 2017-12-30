@@ -1,0 +1,9 @@
+[source,http,options="nowrap"]
+----
+POST /items/validateMetadata HTTP/1.1
+Content-Type: application/json
+Host: localhost:8080
+Content-Length: 32
+
+{ "type": "1", "tag": "myItem" }
+----

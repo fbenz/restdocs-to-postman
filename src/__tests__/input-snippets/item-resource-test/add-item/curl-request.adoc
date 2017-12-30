@@ -1,0 +1,7 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/items' -i -X POST \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer 8114cde8-26dd-4c61-b601-29f945b67d25' \
+    -d '{"description":"Hot News"}'
+----

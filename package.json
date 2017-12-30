@@ -1,0 +1,21 @@
+{
+  "name": "restdocs-to-postman",
+  "version": "1.0.0",
+  "description": "Converts Spring REST Docs cURL snippets to Postman and Insomnia collections",
+  "main": "index.js",
+  "bin": {
+    "restdocs-to-postman": "./bin/cli"
+  },
+  "dependencies": {
+    "commander": "^2.12.2",
+    "insomnia-importers": "^1.5.6"
+  },
+  "devDependencies": {
+    "jest": "^22.0.4"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Florian Benz",
+  "license": "Apache-2.0"
+}

@@ -1,0 +1,6 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/items/process' -i -X POST \
+    -H 'Content-Type: application/json' \
+    -d '{ "command": "cleanup" }'
+----
