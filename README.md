@@ -32,6 +32,8 @@ restdocs-to-postman --folder . --export-format postman --output postman-collecti
 ```
 
 The folder `.` and the export format `postman` are default values and do not have to be defined.
+From the given folder, all folders are recursively scanned.
+Usually, the `generated-snippets` is provided.
 Host and header replacements can be used with `--replacements replacements.json`.
 See `replacement-example.json` for an example of a replacement file.
 
@@ -41,7 +43,7 @@ See `replacement-example.json` for an example of a replacement file.
 const converter = require('restdocs-to-postman');
 
 // Convert Spring REST Docs cURL commands to Postman/Insomnia collections
-const folder = '.';
+const folder = './target/generated-snippets';
 const exportFormat = 'postman';
 const replacements = {
   host: {
@@ -57,8 +59,8 @@ const replacements = {
 };
 const output = converter.convert(folder, exportFormat, replacements);
 
-// Pretty print the result
-console.log(JSON.stringify(output.data, null, 2));
+// Print the result
+console.log(output);
 ```
 
 ## Running Tests

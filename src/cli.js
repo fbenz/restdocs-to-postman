@@ -24,7 +24,7 @@ module.exports.go = function () {
 
     program
         .version(version, '-v, --version')
-        .option('-f, --folder [folder]', 'folder to scan for REST Docs curl-request.adoc/md files', '.')
+        .option('-f, --folder [folder]', 'folder to recursively scan for REST Docs curl-request.adoc/md files', '.')
         .option('-e, --export-format [format]', 'export format', 'postman')
         .option('-o, --output [file]', 'output file')
         .option('-r, --replacements [file]', 'optional JSON file with replacements')
