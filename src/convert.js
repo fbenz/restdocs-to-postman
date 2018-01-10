@@ -65,12 +65,7 @@ const toPostmanItem = (insomniaItem, replacements) => {
     let host = parsedUrl.protocol + "//" + (parsedUrl.auth ? parsedUrl.auth : '') + parsedUrl.host;
     let header;
     if (insomniaItem.headers) {
-        header = insomniaItem.headers.map(h => {
-            return {
-                key: h.name,
-                value: h.value
-            };
-        });
+        header = toPostmanKeyValues(insomniaItem.headers);
     }
     let query;
     if (parsedUrl.query) {
@@ -94,10 +89,7 @@ const toPostmanItem = (insomniaItem, replacements) => {
         request: {
             method: insomniaItem.method,
             header: header,
-            body: {
-                mode: 'raw',
-                raw: insomniaItem.body.text
-            },
+            body: toPostmanBody(insomniaItem.body),
             url: {
                 raw: rawUrl,
                 host: [
@@ -109,6 +101,37 @@ const toPostmanItem = (insomniaItem, replacements) => {
             description: insomniaItem.description
         }
     };
+};
+
+const toPostmanBody = (insomniaBody) => {
+    if (insomniaBody.text) {
+        // for mime types like application/json
+        return {
+            mode: 'raw',
+            raw: insomniaBody.text
+        };
+    } else if (insomniaBody.params && insomniaBody.mimeType === 'application/x-www-form-urlencoded') {
+        return {
+            mode: 'urlencoded',
+            urlencoded: toPostmanKeyValues(insomniaBody.params)
+        };
+    } else if (insomniaBody.params) {
+        return {
+            mode: 'formdata',
+            formdata: toPostmanKeyValues(insomniaBody.params)
+        };
+    } else {
+        return null;
+    }
+};
+
+const toPostmanKeyValues = (insomniaNameValues) => {
+    return insomniaNameValues.map(e => {
+        return {
+            key: e.name,
+            value: e.value
+        };
+    });
 };
 
 const insomniaReplaceHost = (insomniaCollection, hostReplacement) => {
