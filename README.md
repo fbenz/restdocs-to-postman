@@ -28,14 +28,13 @@ npm install --save restdocs-to-postman
 ## Command Line Usage
 
 ```shell
-restdocs-to-postman --folder . --export-format postman --output postman-collection.json
+restdocs-to-postman --folder generated-snippets --export-format postman --output postman-collection.json
 ```
 
-The folder `.` and the export format `postman` are default values and do not have to be defined.
-From the given folder, all folders are recursively scanned.
-Usually, the `generated-snippets` is provided.
+From the given folder, all folders are recursively scanned for `curl-request.adoc` and `curl-request.md` files.
 Host and header replacements can be used with `--replacements replacements.json`.
-See `replacement-example.json` for an example of a replacement file.
+See [replacement-example.json](https://github.com/fbenz/restdocs-to-postman/blob/master/replacements-example.json)
+for an example of a replacement file.
 
 ## Programmatic Usage
 
