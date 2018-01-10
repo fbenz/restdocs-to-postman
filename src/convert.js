@@ -155,6 +155,20 @@ const insomniaReplaceHeaders = (insomniaCollection, headerReplacements) => {
     });
 };
 
+/* By default the name is the full URL, e.g. http://localhost:8080/items/1/process?command=increase
+ *  and this function shortens it to just the pathname, e.g. items/1/process
+ */
+const shortenName = (insomniaItem) => {
+    const parsedUrl = url.parse(insomniaItem.url);
+    if (parsedUrl && parsedUrl.pathname) {
+        let pathname = parsedUrl.pathname.substring(1);
+        if (pathname.length === 0) {
+            pathname = 'index';
+        }
+        insomniaItem.name = pathname;
+    }
+};
+
 module.exports.convert = (folder, exportFormat, replacements) => {
     const results = traverseFilesSync(folder);
     if (!results) {
@@ -170,6 +184,7 @@ module.exports.convert = (folder, exportFormat, replacements) => {
         }
     });
     const insomniaCollection = importers.convert(allCurls).data;
+    insomniaCollection.resources.forEach(i => shortenName(i));
 
     if (replacements && replacements.headers) {
         // This causes no issues when doing the conversion to Postman and can thus be done before.
