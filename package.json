@@ -1,6 +1,6 @@
 {
   "name": "restdocs-to-postman",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "author": "Florian Benz",
   "description": "Converts Spring REST Docs cURL snippets to Postman and Insomnia collections",
   "license": "Apache-2.0",
