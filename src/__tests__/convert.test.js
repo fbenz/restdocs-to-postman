@@ -21,10 +21,6 @@ const converter = require('../../index');
 const fixturesPath = path.join(__dirname, './fixtures');
 const snippetsPath = path.join(__dirname, './input-snippets');
 
-const extractResources = (insomniaCollectionString) => {
-    return JSON.stringify(JSON.parse(insomniaCollectionString).resources);
-};
-
 const exampleReplacements = {
     host: {
         before: 'http://localhost:8080',
@@ -38,28 +34,32 @@ const exampleReplacements = {
     ]
 };
 
-describe('Should convert Spring REST Docs cURL snipptes to', () => {
+const loadFixture = (fileName) => {
+    return JSON.parse(fs.readFileSync(path.join(fixturesPath, fileName), 'utf8'));
+};
+
+describe('Should convert Spring REST Docs cURL snippets to', () => {
     it('an Insomnia collection', () => {
-        const expectedOutput = fs.readFileSync(path.join(fixturesPath, 'insomnia.json'), 'utf8');
-        const actualOutput = converter.convert(snippetsPath, 'insomnia');
-        expect(extractResources(actualOutput)).toEqual(extractResources(expectedOutput));
+        const expectedOutput = loadFixture('insomnia.json');
+        const actualOutput = JSON.parse(converter.convert(snippetsPath, 'insomnia'));
+        expect(actualOutput.resources).toEqual(expectedOutput.resources);
     });
 
     it('a Postman collection', () => {
-        const expectedOutput = fs.readFileSync(path.join(fixturesPath, 'postman.json'), 'utf8');
-        const actualOutput = converter.convert(snippetsPath, 'postman');
+        const expectedOutput = loadFixture('postman.json');
+        const actualOutput = JSON.parse(converter.convert(snippetsPath, 'postman'));
         expect(actualOutput).toEqual(expectedOutput);
     });
 
     it('an Insomnia collection with replacements', () => {
-        const expectedOutput = fs.readFileSync(path.join(fixturesPath, 'insomnia-with-replacements.json'), 'utf8');
-        const actualOutput = converter.convert(snippetsPath, 'insomnia', exampleReplacements);
-        expect(extractResources(actualOutput)).toEqual(extractResources(expectedOutput));
+        const expectedOutput = loadFixture('insomnia-with-replacements.json');
+        const actualOutput = JSON.parse(converter.convert(snippetsPath, 'insomnia', exampleReplacements));
+        expect(actualOutput.resources).toEqual(expectedOutput.resources);
     });
 
     it('a Postman collection with replacements', () => {
-        const expectedOutput = fs.readFileSync(path.join(fixturesPath, 'postman-with-replacements.json'), 'utf8');
-        const actualOutput = converter.convert(snippetsPath, 'postman', exampleReplacements);
+        const expectedOutput = loadFixture( 'postman-with-replacements.json');
+        const actualOutput = JSON.parse(converter.convert(snippetsPath, 'postman', exampleReplacements));
         expect(actualOutput).toEqual(expectedOutput);
     });
 });
