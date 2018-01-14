@@ -34,7 +34,7 @@ const toPostmanBody = (insomniaBody) => {
     }
 };
 
-const toPostmanItem = (insomniaItem, replacements) => {
+const toPostmanItem = (insomniaItem) => {
     let rawUrl = insomniaItem.url;
     const parsedUrl = url.parse(rawUrl);
     let host = parsedUrl.protocol + "//" + (parsedUrl.auth ? parsedUrl.auth : '') + parsedUrl.host;
@@ -55,10 +55,6 @@ const toPostmanItem = (insomniaItem, replacements) => {
             }
         });
     }
-    if (replacements && replacements.host) {
-        rawUrl = rawUrl.replace(replacements.host.before, replacements.host.after);
-        host = host.replace(replacements.host.before, replacements.host.after);
-    }
     return {
         name: insomniaItem.name,
         request: {
@@ -78,10 +74,10 @@ const toPostmanItem = (insomniaItem, replacements) => {
     };
 };
 
-module.exports.toPostmanCollection = (insomniaCollection, replacements) => {
+module.exports.toPostmanCollection = (insomniaCollection) => {
     const postmanItems = insomniaCollection.resources
         .filter(i => i._type === 'request')
-        .map(i => toPostmanItem(i, replacements));
+        .map(toPostmanItem);
     return {
         info: {
             name: 'REST Docs to Postman',

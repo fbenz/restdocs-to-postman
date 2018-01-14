@@ -17,8 +17,10 @@
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
-const importers = require('insomnia-importers');
+const curlToInsomnia = require('./curl-to-insomnia3');
 const insomniaToPostman = require('./insomnia3-to-postman21');
+const insomniaReplacements = require('./insomnia-replacements');
+const postmanReplacements = require('./postman-replacements');
 
 const curlFromRestDocsFile = filename => {
     const data = fs.readFileSync(filename, 'utf8');
@@ -50,27 +52,6 @@ const traverseFilesSync = (dir) => {
     return results;
 };
 
-const insomniaReplaceHost = (insomniaCollection, hostReplacement) => {
-    insomniaCollection.resources.forEach(r => r.url = r.url.replace(hostReplacement.before, hostReplacement.after));
-};
-
-const caseInsensitiveEquals = (stringA, stringB) => {
-    return stringA.toUpperCase() === stringB.toUpperCase();
-};
-
-const insomniaReplaceHeaders = (insomniaCollection, headerReplacements) => {
-    insomniaCollection.resources.forEach(r => {
-        r.headers.forEach(h => {
-            headerReplacements.forEach(hr => {
-                // HTTP header names are case insensitive
-                if (caseInsensitiveEquals(h.name, hr.name)) {
-                    h.value = hr.newValue;
-                }
-            });
-        });
-    });
-};
-
 /* By default the name is the full URL, e.g. http://localhost:8080/items/1/process?command=increase
  *  and this function shortens it to just the pathname, e.g. items/1/process
  */
@@ -99,21 +80,16 @@ module.exports.convert = (folder, exportFormat, replacements) => {
             }
         }
     });
-    const insomniaCollection = importers.convert(allCurls).data;
+    const insomniaCollection = curlToInsomnia.toInsomniaCollection(allCurls);
     insomniaCollection.resources.forEach(i => shortenName(i));
 
-    if (replacements && replacements.headers) {
-        // This causes no issues when doing the conversion to Postman and can thus be done before.
-        insomniaReplaceHeaders(insomniaCollection, replacements.headers);
-    }
-
     if (exportFormat === 'insomnia') {
-        if (replacements && replacements.host) {
-            insomniaReplaceHost(insomniaCollection, replacements.host);
-        }
+        insomniaReplacements.performInsomniaReplacements(insomniaCollection, replacements);
         return JSON.stringify(insomniaCollection);
     } else if (exportFormat === 'postman') {
-        return JSON.stringify(insomniaToPostman.toPostmanCollection(insomniaCollection, replacements));
+        const postmanCollection = insomniaToPostman.toPostmanCollection(insomniaCollection);
+        postmanReplacements.performPostmanReplacements(postmanCollection, replacements);
+        return JSON.stringify(postmanCollection);
     } else {
         throw new Error('Unknown export format: ' + exportFormat);
     }
