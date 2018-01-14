@@ -15,8 +15,8 @@
  */
 'use strict';
 const fs = require('fs');
-const path = require('path');
 const url = require('url');
+const utils = require('./utils');
 const curlToInsomnia = require('./curl-to-insomnia3');
 const insomniaToPostman = require('./insomnia3-to-postman21');
 const insomniaReplacements = require('./insomnia-replacements');
@@ -34,24 +34,6 @@ const curlFromRestDocsFile = filename => {
     }
 };
 
-const traverseFilesSync = (dir) => {
-    let results = [];
-    const list = fs.readdirSync(dir);
-    for (let i in list) {
-        const relativeFile = list[i];
-        if (relativeFile) {
-            const absoluteFile = path.join(dir, relativeFile);
-            const stat = fs.statSync(absoluteFile);
-            if (stat && stat.isDirectory()) {
-                traverseFilesSync(absoluteFile).forEach(f => results.push(f));
-            } else {
-                results.push(absoluteFile);
-            }
-        }
-    }
-    return results;
-};
-
 /* By default the name is the full URL, e.g. http://localhost:8080/items/1/process?command=increase
  *  and this function shortens it to just the pathname, e.g. items/1/process
  */
@@ -67,7 +49,7 @@ const shortenName = (insomniaItem) => {
 };
 
 module.exports.convert = (folder, exportFormat, replacements) => {
-    const results = traverseFilesSync(folder);
+    const results = utils.traverseFilesSync(folder);
     if (!results) {
         return;
     }

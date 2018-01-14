@@ -1,6 +1,7 @@
 /*
  * Converts cURL commands to Insomnia export format v3
  */
+'use strict';
 const importers = require('insomnia-importers');
 
 /**

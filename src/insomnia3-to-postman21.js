@@ -1,6 +1,7 @@
 /*
  * Converts Insomnia export format v3 to Postman Collection Format v2.1.0
  */
+'use strict';
 const url = require('url');
 
 const toPostmanKeyValues = (insomniaNameValues) => {
