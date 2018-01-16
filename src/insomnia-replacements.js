@@ -3,6 +3,9 @@ const utils = require('./utils');
 
 const replaceHeaders = (insomniaCollection, headerReplacements) => {
     insomniaCollection.resources.forEach(insomniaResource => {
+        if (insomniaResource._type !== 'request') {
+            return;
+        }
         insomniaResource.headers.forEach(insomniaHeader => {
             headerReplacements.forEach(replacementHeader => {
                 // HTTP header names are case insensitive
@@ -16,7 +19,9 @@ const replaceHeaders = (insomniaCollection, headerReplacements) => {
 
 const replaceHost = (insomniaCollection, hostReplacement) => {
     insomniaCollection.resources.forEach(insomniaResource => {
-        insomniaResource.url = insomniaResource.url.replace(hostReplacement.before, hostReplacement.after);
+        if (insomniaResource._type === 'request') {
+            insomniaResource.url = insomniaResource.url.replace(hostReplacement.before, hostReplacement.after);
+        }
     });
 };
 

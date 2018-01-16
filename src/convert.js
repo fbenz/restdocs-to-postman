@@ -66,7 +66,11 @@ module.exports.convert = (folder, exportFormat, replacements) => {
         }
     });
     const insomniaCollection = curlToInsomnia.toInsomniaCollection(allCurls);
-    insomniaCollection.resources.forEach(i => shortenName(i));
+    insomniaCollection.resources.forEach(i => {
+        if (i._type === 'request') {
+            shortenName(i);
+        }
+    });
 
     if (exportFormat === 'insomnia') {
         insomniaReplacements.performInsomniaReplacements(insomniaCollection, replacements);
