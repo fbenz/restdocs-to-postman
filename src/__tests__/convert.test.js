@@ -41,25 +41,39 @@ const loadFixture = (fileName) => {
 describe('Should convert Spring REST Docs cURL snippets to', () => {
     it('an Insomnia collection', () => {
         const expectedOutput = loadFixture('insomnia.json');
-        const actualOutput = JSON.parse(converter.convert(snippetsPath, 'insomnia'));
+        const actualOutput = JSON.parse(converter.convert({
+            folder: snippetsPath,
+            exportFormat: 'insomnia'
+        }));
         expect(actualOutput.resources).toEqual(expectedOutput.resources);
     });
 
     it('a Postman collection', () => {
         const expectedOutput = loadFixture('postman.json');
-        const actualOutput = JSON.parse(converter.convert(snippetsPath, 'postman'));
+        const actualOutput = JSON.parse(converter.convert({
+            folder: snippetsPath,
+            exportFormat: 'postman'
+        }));
         expect(actualOutput).toEqual(expectedOutput);
     });
 
     it('an Insomnia collection with replacements', () => {
         const expectedOutput = loadFixture('insomnia-with-replacements.json');
-        const actualOutput = JSON.parse(converter.convert(snippetsPath, 'insomnia', exampleReplacements));
+        const actualOutput = JSON.parse(converter.convert({
+            folder: snippetsPath,
+            exportFormat: 'insomnia',
+            replacements: exampleReplacements
+        }));
         expect(actualOutput.resources).toEqual(expectedOutput.resources);
     });
 
     it('a Postman collection with replacements', () => {
         const expectedOutput = loadFixture( 'postman-with-replacements.json');
-        const actualOutput = JSON.parse(converter.convert(snippetsPath, 'postman', exampleReplacements));
+        const actualOutput = JSON.parse(converter.convert({
+            folder: snippetsPath,
+            exportFormat: 'postman',
+            replacements: exampleReplacements
+        }));
         expect(actualOutput).toEqual(expectedOutput);
     });
 });

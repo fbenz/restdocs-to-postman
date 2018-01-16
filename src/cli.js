@@ -35,7 +35,11 @@ module.exports.go = function () {
         replacements = JSON.parse(fs.readFileSync(program.replacements, 'utf8'));
     }
     // Conversion
-    const result = converter.convert(program.folder, program.exportFormat, replacements);
+    const result = converter.convert({
+        folder: program.folder,
+        exportFormat: program.exportFormat,
+        replacements: replacements
+    });
     // Output/write result
     if (program.output) {
         const fullOutputPath = path.resolve(program.output);

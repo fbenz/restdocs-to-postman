@@ -43,7 +43,7 @@ const addFolders = (folderFn, resourceWrappers) => {
  *
  * @param curlCommands cURL commands separated by semicolons
  */
-module.exports.toInsomniaCollection = (curlCommands) => {
+module.exports.toInsomniaCollection = (folderFn, curlCommands) => {
     const resourceWrappers = curlCommands.map(c => {
         return {
             path: c.path,
@@ -51,7 +51,6 @@ module.exports.toInsomniaCollection = (curlCommands) => {
         }
     });
 
-    const folderFn = null;
     const folderResources = addFolders(folderFn, resourceWrappers);
 
     const requestResources = resourceWrappers.map((resourceWrapper, index) => {

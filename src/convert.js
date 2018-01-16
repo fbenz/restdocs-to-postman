@@ -48,7 +48,8 @@ const shortenName = (insomniaItem) => {
     }
 };
 
-module.exports.convert = (folder, exportFormat, replacements) => {
+module.exports.convert = (options) => {
+    let {folder, exportFormat, replacements, folderFn} = options;
     const results = utils.traverseFilesSync(folder);
     if (!results) {
         return;
@@ -65,7 +66,7 @@ module.exports.convert = (folder, exportFormat, replacements) => {
             }
         }
     });
-    const insomniaCollection = curlToInsomnia.toInsomniaCollection(allCurls);
+    const insomniaCollection = curlToInsomnia.toInsomniaCollection(folderFn, allCurls);
     insomniaCollection.resources.forEach(i => {
         if (i._type === 'request') {
             shortenName(i);
