@@ -53,12 +53,15 @@ module.exports.convert = (folder, exportFormat, replacements) => {
     if (!results) {
         return;
     }
-    let allCurls = '';
-    results.forEach(r => {
-        if (r.endsWith('curl-request.adoc') || r.endsWith('curl-request.md')) {
-            const extractedCurl = curlFromRestDocsFile(r);
+    let allCurls = [];
+    results.forEach(filePath => {
+        if (filePath.endsWith('curl-request.adoc') || filePath.endsWith('curl-request.md')) {
+            const extractedCurl = curlFromRestDocsFile(filePath);
             if (extractedCurl !== null) {
-                allCurls += extractedCurl + ';';
+                allCurls.push({
+                    path: filePath,
+                    curl: extractedCurl
+                });
             }
         }
     });
