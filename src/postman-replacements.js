@@ -16,24 +16,37 @@
 'use strict';
 const utils = require('./utils');
 
+const isRequest = (postmanItem) => {
+    // Only folders have sub items.
+    return !postmanItem.item;
+};
+
 const replaceHeaders = (postmanCollection, headerReplacements) => {
     postmanCollection.item.forEach(postmanItem => {
-        postmanItem.request.header.forEach(postmanHeader => {
-            headerReplacements.forEach(replacementHeader => {
-                // HTTP header names are case insensitive
-                if (utils.caseInsensitiveEquals(postmanHeader.key, replacementHeader.name)) {
-                    postmanHeader.value = replacementHeader.newValue;
-                }
+        if (isRequest(postmanItem)) {
+            postmanItem.request.header.forEach(postmanHeader => {
+                headerReplacements.forEach(replacementHeader => {
+                    // HTTP header names are case insensitive
+                    if (utils.caseInsensitiveEquals(postmanHeader.key, replacementHeader.name)) {
+                        postmanHeader.value = replacementHeader.newValue;
+                    }
+                });
             });
-        });
+        } else {
+            replaceHeaders(postmanItem, headerReplacements);
+        }
     });
 };
 
 const replaceHost = (postmanCollection, hostReplacement) => {
     postmanCollection.item.forEach(postmanItem => {
-        const postmanUrl = postmanItem.request.url;
-        postmanUrl.raw = postmanUrl.raw.replace(hostReplacement.before, hostReplacement.after);
-        postmanUrl.host[0] = postmanUrl.host[0].replace(hostReplacement.before, hostReplacement.after);
+        if (isRequest(postmanItem)) {
+            const postmanUrl = postmanItem.request.url;
+            postmanUrl.raw = postmanUrl.raw.replace(hostReplacement.before, hostReplacement.after);
+            postmanUrl.host[0] = postmanUrl.host[0].replace(hostReplacement.before, hostReplacement.after);
+        } else {
+            replaceHost(postmanItem, hostReplacement);
+        }
     });
 };
 
