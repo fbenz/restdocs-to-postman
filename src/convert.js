@@ -48,11 +48,16 @@ const shortenName = (insomniaItem) => {
     }
 };
 
+/**
+ *
+ * @param {{folder: string, exportFormat: string, replacements: ?Object, folderFn: ?function}} options
+ * @return {?string}
+ */
 module.exports.convert = (options) => {
     let {folder, exportFormat, replacements, folderFn} = options;
     const results = utils.traverseFilesSync(folder);
     if (!results) {
-        return;
+        return null;
     }
     let allCurls = [];
     results.forEach(filePath => {

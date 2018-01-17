@@ -34,7 +34,7 @@ npm install --save restdocs-to-postman
 ## Command Line Usage
 
 ```shell
-restdocs-to-postman --folder generated-snippets --export-format postman --output postman-collection.json
+restdocs-to-postman --input generated-snippets --export-format postman --output postman-collection.json
 ```
 
 From the given folder, all folders are recursively scanned for `curl-request.adoc` and `curl-request.md` files.
@@ -62,7 +62,7 @@ const replacements = {
      }
   ]
 };
-const output = converter.convert(folder, exportFormat, replacements);
+const output = converter.convert({folder, exportFormat, replacements});
 
 // Print the result
 console.log(output);

@@ -23,3 +23,19 @@ module.exports.secondLastFolder = (filePath, url) => {
         return null;
     }
 };
+
+/**
+ * @param {?string} name
+ * @return {?function}
+ */
+module.exports.nameToFunction = (name) => {
+    if (!name) {
+        return null;
+    }
+    switch (name) {
+        case 'secondLastFolder':
+            return module.exports.secondLastFolder;
+        default:
+            throw new Error('Unknown folder function: ' + name);
+    }
+};

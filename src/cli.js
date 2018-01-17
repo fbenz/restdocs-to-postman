@@ -18,16 +18,18 @@ const fs = require('fs');
 const path = require('path');
 const program = require('commander');
 const converter = require('./convert');
+const folderFunctions = require('./folder-functions');
 const {version} = require('../package.json');
 
 module.exports.go = function () {
 
     program
         .version(version, '-v, --version')
-        .option('-f, --folder [folder]', 'folder to recursively scan for REST Docs curl-request.adoc/md files', '.')
+        .option('-i, --input [folder]', 'folder to recursively scan for REST Docs curl-request.adoc/md files', '.')
         .option('-e, --export-format [format]', 'export format', 'postman')
         .option('-o, --output [file]', 'output file')
         .option('-r, --replacements [file]', 'optional JSON file with replacements')
+        .option('-f, --folder-function [function name]', 'optional function to structure requests into folders')
         .parse(process.argv);
 
     let replacements;
@@ -36,14 +38,19 @@ module.exports.go = function () {
     }
     // Conversion
     const result = converter.convert({
-        folder: program.folder,
+        folder: program.input,
         exportFormat: program.exportFormat,
-        replacements: replacements
+        replacements: replacements,
+        folderFn: folderFunctions.nameToFunction(program.folderFunction)
     });
     // Output/write result
     if (program.output) {
         const fullOutputPath = path.resolve(program.output);
-        fs.writeFileSync(fullOutputPath, result);
+        if (fullOutputPath) {
+            fs.writeFileSync(fullOutputPath, result);
+        } else {
+            console.log('No cURL commands were found.');
+        }
     } else {
         console.log(result);
     }
