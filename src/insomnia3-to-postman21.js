@@ -91,15 +91,36 @@ const toPostmanItem = (insomniaItem) => {
     };
 };
 
+const toPostmanFolder = (insomniaRequestGroup) => {
+    return {
+        name: insomniaRequestGroup.name,
+        item: []
+    }
+};
+
 module.exports.toPostmanCollection = (insomniaCollection) => {
-    const postmanItems = insomniaCollection.resources
-        .filter(i => i._type === 'request')
-        .map(toPostmanItem);
+    const folderMap = {};
+    insomniaCollection.resources
+        .filter(r => r._type === 'request_group')
+        .forEach(r => folderMap[r._id] = toPostmanFolder(r));
+
+    // Folders come first and are sorted by name.
+    const topLevelItems = Object.values(folderMap).sort((a, b) => a.name.localeCompare(b.name));
+
+    insomniaCollection.resources
+        .filter(r => r._type === 'request')
+        .forEach(r => {
+            if (folderMap[r.parentId]) {
+                folderMap[r.parentId].item.push(toPostmanItem(r));
+            } else {
+                topLevelItems.push(toPostmanItem(r))
+            }
+        });
     return {
         info: {
             name: 'REST Docs to Postman',
             schema: 'https://schema.getpostman.com/json/collection/v2.1.0/collection.json'
         },
-        item: postmanItems
+        item: topLevelItems
     };
 };

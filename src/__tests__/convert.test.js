@@ -87,4 +87,14 @@ describe('Should convert Spring REST Docs cURL snippets to', () => {
         }));
         expect(actualOutput.resources).toEqual(expectedOutput.resources);
     });
+
+    it('a Postman collection with folders', () => {
+        const expectedOutput = loadFixture('postman-with-folders.json');
+        const actualOutput = JSON.parse(converter.convert({
+            folder: snippetsPath,
+            exportFormat: 'postman',
+            folderFn: folderFunctions.secondLastFolder
+        }));
+        expect(actualOutput.resources).toEqual(expectedOutput.resources);
+    });
 });
