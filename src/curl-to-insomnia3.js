@@ -1,14 +1,40 @@
 /*
+ * Copyright 2018 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/*
  * Converts cURL commands to Insomnia export format v3
  */
 'use strict';
 const importers = require('insomnia-importers');
 const {version} = require('../package.json');
 
+/**
+ * @param {function(path: string, url: string): ?string} folderFn
+ * @param {{path: string, resource: Object}} resourceWrapper
+ * @return {?string} optional folder name
+ */
 const toFolder = (folderFn, resourceWrapper) => {
     return folderFn(resourceWrapper.path, resourceWrapper.resource.url);
 };
 
+/**
+ * @param {function(path: string, url: string): ?string} folderFn
+ * @param {Array<{path: string, resource: Object}>} resourceWrappers
+ * @return {Array<Object>} Array of Insomnia resources representing all folders
+ */
 const addFolders = (folderFn, resourceWrappers) => {
     const folderResources = [];
     if (!folderFn) {
@@ -40,8 +66,8 @@ const addFolders = (folderFn, resourceWrappers) => {
 };
 
 /**
- *
- * @param curlCommands cURL commands separated by semicolons
+ * @param {function(path: string, url: string): ?string} folderFn
+ * @param {Array<{path: string, curl: string}>} curlCommands
  */
 module.exports.toInsomniaCollection = (folderFn, curlCommands) => {
     const resourceWrappers = curlCommands.map(c => {

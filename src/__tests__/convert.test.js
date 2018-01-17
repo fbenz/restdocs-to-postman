@@ -17,9 +17,10 @@
 const fs = require('fs');
 const path = require('path');
 const converter = require('../../index');
+const folderFunctions = require('../folder-functions');
 
-const fixturesPath = path.join(__dirname, './fixtures');
-const snippetsPath = path.join(__dirname, './input-snippets');
+const fixturesPath = path.join(__dirname, 'fixtures');
+const snippetsPath = path.join(__dirname, 'input-snippets');
 
 const exampleReplacements = {
     host: {
@@ -75,5 +76,15 @@ describe('Should convert Spring REST Docs cURL snippets to', () => {
             replacements: exampleReplacements
         }));
         expect(actualOutput).toEqual(expectedOutput);
+    });
+
+    it('an Insomnia collection with folders', () => {
+        const expectedOutput = loadFixture('insomnia-with-folders.json');
+        const actualOutput = JSON.parse(converter.convert({
+            folder: snippetsPath,
+            exportFormat: 'insomnia',
+            folderFn: folderFunctions.secondLastFolder
+        }));
+        expect(actualOutput.resources).toEqual(expectedOutput.resources);
     });
 });
