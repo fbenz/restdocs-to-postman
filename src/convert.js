@@ -48,22 +48,35 @@ const shortenName = (insomniaItem) => {
     }
 };
 
-module.exports.convert = (folder, exportFormat, replacements) => {
-    const results = utils.traverseFilesSync(folder);
+/**
+ *
+ * @param {{folderToScan: string, exportFormat: string, replacements: ?Object, determineFolder: ?function}} options
+ * @return {?string}
+ */
+module.exports.convert = (options) => {
+    let {folderToScan, exportFormat, replacements, determineFolder} = options;
+    const results = utils.traverseFilesSync(folderToScan);
     if (!results) {
-        return;
+        return null;
     }
-    let allCurls = '';
-    results.forEach(r => {
-        if (r.endsWith('curl-request.adoc') || r.endsWith('curl-request.md')) {
-            const extractedCurl = curlFromRestDocsFile(r);
+    let allCurls = [];
+    results.forEach(filePath => {
+        if (filePath.endsWith('curl-request.adoc') || filePath.endsWith('curl-request.md')) {
+            const extractedCurl = curlFromRestDocsFile(filePath);
             if (extractedCurl !== null) {
-                allCurls += extractedCurl + ';';
+                allCurls.push({
+                    path: filePath,
+                    curl: extractedCurl
+                });
             }
         }
     });
-    const insomniaCollection = curlToInsomnia.toInsomniaCollection(allCurls);
-    insomniaCollection.resources.forEach(i => shortenName(i));
+    const insomniaCollection = curlToInsomnia.toInsomniaCollection(determineFolder, allCurls);
+    insomniaCollection.resources.forEach(i => {
+        if (i._type === 'request') {
+            shortenName(i);
+        }
+    });
 
     if (exportFormat === 'insomnia') {
         insomniaReplacements.performInsomniaReplacements(insomniaCollection, replacements);

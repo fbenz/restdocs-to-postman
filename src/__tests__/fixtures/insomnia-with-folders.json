@@ -5,7 +5,21 @@
   "__export_source": "test",
   "resources": [
     {
+      "_type": "request_group",
+      "_id": "__FOLDER_1__",
+      "name": "documentation-test",
       "parentId": "__WORKSPACE_ID__",
+      "metaSortKey": 0
+    },
+    {
+      "_type": "request_group",
+      "_id": "__FOLDER_2__",
+      "name": "item-resource-test",
+      "parentId": "__WORKSPACE_ID__",
+      "metaSortKey": 1
+    },
+    {
+      "parentId": "__FOLDER_1__",
       "name": "docs",
       "url": "http://localhost:8080/docs",
       "body": {},
@@ -17,7 +31,7 @@
       "_type": "request"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
+      "parentId": "__FOLDER_1__",
       "name": "index",
       "url": "http://localhost:8080/",
       "body": {},
@@ -29,7 +43,7 @@
       "_type": "request"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
+      "parentId": "__FOLDER_2__",
       "name": "items",
       "url": "http://localhost:8080/items",
       "body": {
@@ -53,7 +67,7 @@
       "_type": "request"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
+      "parentId": "__FOLDER_2__",
       "name": "items/cloneItem",
       "url": "http://localhost:8080/items/cloneItem",
       "body": {
@@ -73,7 +87,7 @@
       "_type": "request"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
+      "parentId": "__FOLDER_2__",
       "name": "items/1",
       "url": "http://localhost:8080/items/1",
       "body": {},
@@ -90,7 +104,7 @@
       "_type": "request"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
+      "parentId": "__FOLDER_2__",
       "name": "items",
       "url": "http://localhost:8080/items",
       "body": {},
@@ -102,7 +116,7 @@
       "_type": "request"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
+      "parentId": "__FOLDER_2__",
       "name": "items/1/child-1",
       "url": "http://localhost:8080/items/1/child-1",
       "body": {},
@@ -114,7 +128,7 @@
       "_type": "request"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
+      "parentId": "__FOLDER_2__",
       "name": "items/1",
       "url": "http://localhost:8080/items/1",
       "body": {},
@@ -126,7 +140,7 @@
       "_type": "request"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
+      "parentId": "__FOLDER_2__",
       "name": "items/process",
       "url": "http://localhost:8080/items/process",
       "body": {
@@ -152,7 +166,7 @@
       "_type": "request"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
+      "parentId": "__FOLDER_2__",
       "name": "items/1/process",
       "url": "http://localhost:8080/items/1/process",
       "body": {
@@ -181,7 +195,7 @@
       "_type": "request"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
+      "parentId": "__FOLDER_2__",
       "name": "items/search",
       "url": "http://localhost:8080/items/search?desc=main&hint=1",
       "body": {},
@@ -193,7 +207,7 @@
       "_type": "request"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
+      "parentId": "__FOLDER_2__",
       "name": "items/1",
       "url": "http://localhost:8080/items/1",
       "body": {
@@ -217,7 +231,7 @@
       "_type": "request"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
+      "parentId": "__FOLDER_2__",
       "name": "items/validateMetadata",
       "url": "http://localhost:8080/items/validateMetadata",
       "body": {

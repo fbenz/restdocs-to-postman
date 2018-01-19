@@ -17,9 +17,10 @@
 const fs = require('fs');
 const path = require('path');
 const converter = require('../../index');
+const folderFunctions = require('../folder-functions');
 
-const fixturesPath = path.join(__dirname, './fixtures');
-const snippetsPath = path.join(__dirname, './input-snippets');
+const fixturesPath = path.join(__dirname, 'fixtures');
+const snippetsPath = path.join(__dirname, 'input-snippets');
 
 const exampleReplacements = {
     host: {
@@ -41,25 +42,81 @@ const loadFixture = (fileName) => {
 describe('Should convert Spring REST Docs cURL snippets to', () => {
     it('an Insomnia collection', () => {
         const expectedOutput = loadFixture('insomnia.json');
-        const actualOutput = JSON.parse(converter.convert(snippetsPath, 'insomnia'));
+        const actualOutput = JSON.parse(converter.convert({
+            folderToScan: snippetsPath,
+            exportFormat: 'insomnia'
+        }));
         expect(actualOutput.resources).toEqual(expectedOutput.resources);
     });
 
     it('a Postman collection', () => {
         const expectedOutput = loadFixture('postman.json');
-        const actualOutput = JSON.parse(converter.convert(snippetsPath, 'postman'));
+        const actualOutput = JSON.parse(converter.convert({
+            folderToScan: snippetsPath,
+            exportFormat: 'postman'
+        }));
         expect(actualOutput).toEqual(expectedOutput);
     });
 
     it('an Insomnia collection with replacements', () => {
         const expectedOutput = loadFixture('insomnia-with-replacements.json');
-        const actualOutput = JSON.parse(converter.convert(snippetsPath, 'insomnia', exampleReplacements));
+        const actualOutput = JSON.parse(converter.convert({
+            folderToScan: snippetsPath,
+            exportFormat: 'insomnia',
+            replacements: exampleReplacements
+        }));
         expect(actualOutput.resources).toEqual(expectedOutput.resources);
     });
 
     it('a Postman collection with replacements', () => {
         const expectedOutput = loadFixture( 'postman-with-replacements.json');
-        const actualOutput = JSON.parse(converter.convert(snippetsPath, 'postman', exampleReplacements));
+        const actualOutput = JSON.parse(converter.convert({
+            folderToScan: snippetsPath,
+            exportFormat: 'postman',
+            replacements: exampleReplacements
+        }));
+        expect(actualOutput).toEqual(expectedOutput);
+    });
+
+    it('an Insomnia collection with folders', () => {
+        const expectedOutput = loadFixture('insomnia-with-folders.json');
+        const actualOutput = JSON.parse(converter.convert({
+            folderToScan: snippetsPath,
+            exportFormat: 'insomnia',
+            determineFolder: folderFunctions.secondLastFolder
+        }));
+        expect(actualOutput.resources).toEqual(expectedOutput.resources);
+    });
+
+    it('a Postman collection with folders', () => {
+        const expectedOutput = loadFixture('postman-with-folders.json');
+        const actualOutput = JSON.parse(converter.convert({
+            folderToScan: snippetsPath,
+            exportFormat: 'postman',
+            determineFolder: folderFunctions.secondLastFolder
+        }));
+        expect(actualOutput).toEqual(expectedOutput);
+    });
+
+    it('an Insomnia collection with folders and replacements', () => {
+        const expectedOutput = loadFixture('insomnia-with-folders-and-replacements.json');
+        const actualOutput = JSON.parse(converter.convert({
+            folderToScan: snippetsPath,
+            exportFormat: 'insomnia',
+            determineFolder: folderFunctions.secondLastFolder,
+            replacements: exampleReplacements
+        }));
+        expect(actualOutput.resources).toEqual(expectedOutput.resources);
+    });
+
+    it('a Postman collection with folders and replacements', () => {
+        const expectedOutput = loadFixture('postman-with-folders-and-replacements.json');
+        const actualOutput = JSON.parse(converter.convert({
+            folderToScan: snippetsPath,
+            exportFormat: 'postman',
+            determineFolder: folderFunctions.secondLastFolder,
+            replacements: exampleReplacements
+        }));
         expect(actualOutput).toEqual(expectedOutput);
     });
 });

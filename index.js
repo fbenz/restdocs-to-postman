@@ -16,6 +16,6 @@
 'use strict';
 const converter = require('./src/convert');
 
-module.exports.convert = function (folder, exportFormat, replacements) {
-    return converter.convert(folder, exportFormat, replacements);
+module.exports.convert = function (options) {
+    return converter.convert(options);
 };
