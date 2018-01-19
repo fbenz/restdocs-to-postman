@@ -50,12 +50,12 @@ const shortenName = (insomniaItem) => {
 
 /**
  *
- * @param {{folder: string, exportFormat: string, replacements: ?Object, folderFn: ?function}} options
+ * @param {{folderToScan: string, exportFormat: string, replacements: ?Object, determineFolder: ?function}} options
  * @return {?string}
  */
 module.exports.convert = (options) => {
-    let {folder, exportFormat, replacements, folderFn} = options;
-    const results = utils.traverseFilesSync(folder);
+    let {folderToScan, exportFormat, replacements, determineFolder} = options;
+    const results = utils.traverseFilesSync(folderToScan);
     if (!results) {
         return null;
     }
@@ -71,7 +71,7 @@ module.exports.convert = (options) => {
             }
         }
     });
-    const insomniaCollection = curlToInsomnia.toInsomniaCollection(folderFn, allCurls);
+    const insomniaCollection = curlToInsomnia.toInsomniaCollection(determineFolder, allCurls);
     insomniaCollection.resources.forEach(i => {
         if (i._type === 'request') {
             shortenName(i);

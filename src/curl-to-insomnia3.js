@@ -22,28 +22,28 @@ const importers = require('insomnia-importers');
 const {version} = require('../package.json');
 
 /**
- * @param {function(path: string, url: string): ?string} folderFn
+ * @param {function(path: string, url: string): ?string} determineFolder
  * @param {{path: string, resource: Object}} resourceWrapper
  * @return {?string} optional folder name
  */
-const toFolder = (folderFn, resourceWrapper) => {
-    return folderFn(resourceWrapper.path, resourceWrapper.resource.url);
+const toFolder = (determineFolder, resourceWrapper) => {
+    return determineFolder(resourceWrapper.path, resourceWrapper.resource.url);
 };
 
 /**
- * @param {function(path: string, url: string): ?string} folderFn
+ * @param {function(path: string, url: string): ?string} determineFolder
  * @param {Array<{path: string, resource: Object}>} resourceWrappers
  * @return {Array<Object>} Array of Insomnia resources representing all folders
  */
-const addFolders = (folderFn, resourceWrappers) => {
+const addFolders = (determineFolder, resourceWrappers) => {
     const folderResources = [];
-    if (!folderFn) {
+    if (!determineFolder) {
         return folderResources;
     }
     let folderCount = 0;
     const folderNameToId = {};
     resourceWrappers.forEach(resourceWrapper => {
-        const folder = toFolder(folderFn, resourceWrapper);
+        const folder = toFolder(determineFolder, resourceWrapper);
         if (folder) {
             if (folderNameToId[folder]) {
                 resourceWrapper.resource.parentId = folderNameToId[folder];
@@ -68,10 +68,10 @@ const addFolders = (folderFn, resourceWrappers) => {
 };
 
 /**
- * @param {function(path: string, url: string): ?string} folderFn
+ * @param {function(path: string, url: string): ?string} determineFolder
  * @param {Array<{path: string, curl: string}>} curlCommands
  */
-module.exports.toInsomniaCollection = (folderFn, curlCommands) => {
+module.exports.toInsomniaCollection = (determineFolder, curlCommands) => {
     const resourceWrappers = curlCommands.map(c => {
         return {
             path: c.path,
@@ -79,7 +79,7 @@ module.exports.toInsomniaCollection = (folderFn, curlCommands) => {
         }
     });
 
-    const folderResources = addFolders(folderFn, resourceWrappers);
+    const folderResources = addFolders(determineFolder, resourceWrappers);
 
     const requestResources = resourceWrappers.map((resourceWrapper, index) => {
         resourceWrapper.resource._id = `__REQ_${index + 1}__`;

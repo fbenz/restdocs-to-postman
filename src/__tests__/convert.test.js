@@ -43,7 +43,7 @@ describe('Should convert Spring REST Docs cURL snippets to', () => {
     it('an Insomnia collection', () => {
         const expectedOutput = loadFixture('insomnia.json');
         const actualOutput = JSON.parse(converter.convert({
-            folder: snippetsPath,
+            folderToScan: snippetsPath,
             exportFormat: 'insomnia'
         }));
         expect(actualOutput.resources).toEqual(expectedOutput.resources);
@@ -52,7 +52,7 @@ describe('Should convert Spring REST Docs cURL snippets to', () => {
     it('a Postman collection', () => {
         const expectedOutput = loadFixture('postman.json');
         const actualOutput = JSON.parse(converter.convert({
-            folder: snippetsPath,
+            folderToScan: snippetsPath,
             exportFormat: 'postman'
         }));
         expect(actualOutput).toEqual(expectedOutput);
@@ -61,7 +61,7 @@ describe('Should convert Spring REST Docs cURL snippets to', () => {
     it('an Insomnia collection with replacements', () => {
         const expectedOutput = loadFixture('insomnia-with-replacements.json');
         const actualOutput = JSON.parse(converter.convert({
-            folder: snippetsPath,
+            folderToScan: snippetsPath,
             exportFormat: 'insomnia',
             replacements: exampleReplacements
         }));
@@ -71,7 +71,7 @@ describe('Should convert Spring REST Docs cURL snippets to', () => {
     it('a Postman collection with replacements', () => {
         const expectedOutput = loadFixture( 'postman-with-replacements.json');
         const actualOutput = JSON.parse(converter.convert({
-            folder: snippetsPath,
+            folderToScan: snippetsPath,
             exportFormat: 'postman',
             replacements: exampleReplacements
         }));
@@ -81,9 +81,9 @@ describe('Should convert Spring REST Docs cURL snippets to', () => {
     it('an Insomnia collection with folders', () => {
         const expectedOutput = loadFixture('insomnia-with-folders.json');
         const actualOutput = JSON.parse(converter.convert({
-            folder: snippetsPath,
+            folderToScan: snippetsPath,
             exportFormat: 'insomnia',
-            folderFn: folderFunctions.secondLastFolder
+            determineFolder: folderFunctions.secondLastFolder
         }));
         expect(actualOutput.resources).toEqual(expectedOutput.resources);
     });
@@ -91,9 +91,9 @@ describe('Should convert Spring REST Docs cURL snippets to', () => {
     it('a Postman collection with folders', () => {
         const expectedOutput = loadFixture('postman-with-folders.json');
         const actualOutput = JSON.parse(converter.convert({
-            folder: snippetsPath,
+            folderToScan: snippetsPath,
             exportFormat: 'postman',
-            folderFn: folderFunctions.secondLastFolder
+            determineFolder: folderFunctions.secondLastFolder
         }));
         expect(actualOutput).toEqual(expectedOutput);
     });
@@ -101,9 +101,9 @@ describe('Should convert Spring REST Docs cURL snippets to', () => {
     it('an Insomnia collection with folders and replacements', () => {
         const expectedOutput = loadFixture('insomnia-with-folders-and-replacements.json');
         const actualOutput = JSON.parse(converter.convert({
-            folder: snippetsPath,
+            folderToScan: snippetsPath,
             exportFormat: 'insomnia',
-            folderFn: folderFunctions.secondLastFolder,
+            determineFolder: folderFunctions.secondLastFolder,
             replacements: exampleReplacements
         }));
         expect(actualOutput.resources).toEqual(expectedOutput.resources);
@@ -112,9 +112,9 @@ describe('Should convert Spring REST Docs cURL snippets to', () => {
     it('a Postman collection with folders and replacements', () => {
         const expectedOutput = loadFixture('postman-with-folders-and-replacements.json');
         const actualOutput = JSON.parse(converter.convert({
-            folder: snippetsPath,
+            folderToScan: snippetsPath,
             exportFormat: 'postman',
-            folderFn: folderFunctions.secondLastFolder,
+            determineFolder: folderFunctions.secondLastFolder,
             replacements: exampleReplacements
         }));
         expect(actualOutput).toEqual(expectedOutput);

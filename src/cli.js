@@ -38,10 +38,10 @@ module.exports.go = function () {
     }
     // Conversion
     const result = converter.convert({
-        folder: program.input,
+        folderToScan: program.input,
         exportFormat: program.exportFormat,
         replacements: replacements,
-        folderFn: folderFunctions.nameToFunction(program.folderFunction)
+        determineFolder: folderFunctions.nameToFunction(program.folderFunction)
     });
     // Output/write result
     if (program.output) {
