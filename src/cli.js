@@ -29,7 +29,7 @@ module.exports.go = function () {
         .option('-e, --export-format [format]', 'export format', 'postman')
         .option('-o, --output [file]', 'output file')
         .option('-r, --replacements [file]', 'optional JSON file with replacements')
-        .option('-f, --folder-function [function name]', 'optional function to structure requests into folders')
+        .option('-f, --determine-folder [function name]', 'optional function to structure requests into folders')
         .parse(process.argv);
 
     let replacements;
