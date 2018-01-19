@@ -59,7 +59,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{oauth2Token}}"
+                "value": "Bearer {{oauth2Token}}"
               }
             ],
             "body": {
@@ -112,7 +112,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "{{oauth2Token}}"
+                "value": "Bearer {{oauth2Token}}"
               }
             ],
             "body": null,
@@ -294,7 +294,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{oauth2Token}}"
+                "value": "Bearer {{oauth2Token}}"
               }
             ],
             "body": {

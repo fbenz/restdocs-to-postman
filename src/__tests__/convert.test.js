@@ -30,7 +30,7 @@ const exampleReplacements = {
     headers: [
         {
             name: 'Authorization',
-            newValue: '{{oauth2Token}}'
+            newValue: 'Bearer {{oauth2Token}}'
         }
     ]
 };

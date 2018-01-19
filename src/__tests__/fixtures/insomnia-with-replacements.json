@@ -45,7 +45,7 @@
         },
         {
           "name": "Authorization",
-          "value": "{{oauth2Token}}"
+          "value": "Bearer {{oauth2Token}}"
         }
       ],
       "authentication": {},
@@ -82,7 +82,7 @@
       "headers": [
         {
           "name": "Authorization",
-          "value": "{{oauth2Token}}"
+          "value": "Bearer {{oauth2Token}}"
         }
       ],
       "authentication": {},
@@ -209,7 +209,7 @@
         },
         {
           "name": "Authorization",
-          "value": "{{oauth2Token}}"
+          "value": "Bearer {{oauth2Token}}"
         }
       ],
       "authentication": {},
