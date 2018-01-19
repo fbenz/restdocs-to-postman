@@ -54,14 +54,16 @@ const addFolders = (folderFn, resourceWrappers) => {
                     _type: 'request_group',
                     _id: `__FOLDER_${folderCount}__`,
                     name: folder,
-                    parentId: '__WORKSPACE_ID__',
-                    metaSortKey: folderCount
+                    parentId: '__WORKSPACE_ID__'
                 });
                 resourceWrapper.resource.parentId = folderId;
                 folderNameToId[folder] = folderId;
             }
         }
     });
+    folderResources
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .forEach((resource, index) => resource.metaSortKey = index);
     return folderResources;
 };
 

@@ -9,14 +9,14 @@
       "_id": "__FOLDER_1__",
       "name": "documentation-test",
       "parentId": "__WORKSPACE_ID__",
-      "metaSortKey": 1
+      "metaSortKey": 0
     },
     {
       "_type": "request_group",
       "_id": "__FOLDER_2__",
       "name": "item-resource-test",
       "parentId": "__WORKSPACE_ID__",
-      "metaSortKey": 2
+      "metaSortKey": 1
     },
     {
       "parentId": "__FOLDER_1__",
