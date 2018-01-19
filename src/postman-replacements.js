@@ -17,8 +17,13 @@
 const utils = require('./utils');
 
 const isRequest = (postmanItem) => {
+    // Only requests have a request field.
+    return postmanItem.request;
+};
+
+const isFolder = (postmanItem) => {
     // Only folders have sub items.
-    return !postmanItem.item;
+    return postmanItem.item;
 };
 
 const replaceHeaders = (postmanCollection, headerReplacements) => {
@@ -32,7 +37,7 @@ const replaceHeaders = (postmanCollection, headerReplacements) => {
                     }
                 });
             });
-        } else {
+        } else if (isFolder(postmanItem)) {
             replaceHeaders(postmanItem, headerReplacements);
         }
     });
@@ -44,7 +49,7 @@ const replaceHost = (postmanCollection, hostReplacement) => {
             const postmanUrl = postmanItem.request.url;
             postmanUrl.raw = postmanUrl.raw.replace(hostReplacement.before, hostReplacement.after);
             postmanUrl.host[0] = postmanUrl.host[0].replace(hostReplacement.before, hostReplacement.after);
-        } else {
+        } else if (isFolder(postmanItem)) {
             replaceHost(postmanItem, hostReplacement);
         }
     });
