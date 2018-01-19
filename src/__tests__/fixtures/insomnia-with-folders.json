@@ -5,9 +5,23 @@
   "__export_source": "test",
   "resources": [
     {
+      "_type": "request_group",
+      "_id": "__FOLDER_1__",
+      "name": "documentation-test",
       "parentId": "__WORKSPACE_ID__",
+      "metaSortKey": 0
+    },
+    {
+      "_type": "request_group",
+      "_id": "__FOLDER_2__",
+      "name": "item-resource-test",
+      "parentId": "__WORKSPACE_ID__",
+      "metaSortKey": 1
+    },
+    {
+      "parentId": "__FOLDER_1__",
       "name": "docs",
-      "url": "{{host}}/docs",
+      "url": "http://localhost:8080/docs",
       "body": {},
       "method": "GET",
       "parameters": [],
@@ -17,9 +31,9 @@
       "_type": "request"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
+      "parentId": "__FOLDER_1__",
       "name": "index",
-      "url": "{{host}}/",
+      "url": "http://localhost:8080/",
       "body": {},
       "method": "GET",
       "parameters": [],
@@ -29,9 +43,9 @@
       "_type": "request"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
+      "parentId": "__FOLDER_2__",
       "name": "items",
-      "url": "{{host}}/items",
+      "url": "http://localhost:8080/items",
       "body": {
         "mimeType": "application/json",
         "text": "{\"description\":\"Hot News\"}"
@@ -45,7 +59,7 @@
         },
         {
           "name": "Authorization",
-          "value": "Bearer {{oauth2Token}}"
+          "value": "Bearer 8114cde8-26dd-4c61-b601-29f945b67d25"
         }
       ],
       "authentication": {},
@@ -53,9 +67,9 @@
       "_type": "request"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
+      "parentId": "__FOLDER_2__",
       "name": "items/cloneItem",
-      "url": "{{host}}/items/cloneItem",
+      "url": "http://localhost:8080/items/cloneItem",
       "body": {
         "mimeType": "application/json",
         "text": "{ \"name\": \"xyz\" }"
@@ -73,16 +87,16 @@
       "_type": "request"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
+      "parentId": "__FOLDER_2__",
       "name": "items/1",
-      "url": "{{host}}/items/1",
+      "url": "http://localhost:8080/items/1",
       "body": {},
       "method": "DELETE",
       "parameters": [],
       "headers": [
         {
           "name": "Authorization",
-          "value": "Bearer {{oauth2Token}}"
+          "value": "Bearer 8114cde8-26dd-4c61-b601-29f945b67d25"
         }
       ],
       "authentication": {},
@@ -90,9 +104,9 @@
       "_type": "request"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
+      "parentId": "__FOLDER_2__",
       "name": "items",
-      "url": "{{host}}/items",
+      "url": "http://localhost:8080/items",
       "body": {},
       "method": "GET",
       "parameters": [],
@@ -102,9 +116,9 @@
       "_type": "request"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
+      "parentId": "__FOLDER_2__",
       "name": "items/1/child-1",
-      "url": "{{host}}/items/1/child-1",
+      "url": "http://localhost:8080/items/1/child-1",
       "body": {},
       "method": "GET",
       "parameters": [],
@@ -114,9 +128,9 @@
       "_type": "request"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
+      "parentId": "__FOLDER_2__",
       "name": "items/1",
-      "url": "{{host}}/items/1",
+      "url": "http://localhost:8080/items/1",
       "body": {},
       "method": "GET",
       "parameters": [],
@@ -126,9 +140,9 @@
       "_type": "request"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
+      "parentId": "__FOLDER_2__",
       "name": "items/process",
-      "url": "{{host}}/items/process",
+      "url": "http://localhost:8080/items/process",
       "body": {
         "params": [
           {
@@ -152,9 +166,9 @@
       "_type": "request"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
+      "parentId": "__FOLDER_2__",
       "name": "items/1/process",
-      "url": "{{host}}/items/1/process",
+      "url": "http://localhost:8080/items/1/process",
       "body": {
         "mimeType": "application/x-www-form-urlencoded",
         "params": [
@@ -181,9 +195,9 @@
       "_type": "request"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
+      "parentId": "__FOLDER_2__",
       "name": "items/search",
-      "url": "{{host}}/items/search?desc=main&hint=1",
+      "url": "http://localhost:8080/items/search?desc=main&hint=1",
       "body": {},
       "method": "GET",
       "parameters": [],
@@ -193,9 +207,9 @@
       "_type": "request"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
+      "parentId": "__FOLDER_2__",
       "name": "items/1",
-      "url": "{{host}}/items/1",
+      "url": "http://localhost:8080/items/1",
       "body": {
         "mimeType": "application/json",
         "text": "{\"description\":\"Hot News\"}"
@@ -209,7 +223,7 @@
         },
         {
           "name": "Authorization",
-          "value": "Bearer {{oauth2Token}}"
+          "value": "Bearer 8114cde8-26dd-4c61-b601-29f945b67d25"
         }
       ],
       "authentication": {},
@@ -217,9 +231,9 @@
       "_type": "request"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
+      "parentId": "__FOLDER_2__",
       "name": "items/validateMetadata",
-      "url": "{{host}}/items/validateMetadata",
+      "url": "http://localhost:8080/items/validateMetadata",
       "body": {
         "mimeType": "application/json",
         "text": "{ \"type\": \"1\", \"tag\": \"myItem\" }"

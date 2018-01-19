@@ -34,10 +34,12 @@ npm install --save restdocs-to-postman
 ## Command Line Usage
 
 ```shell
-restdocs-to-postman --folder generated-snippets --export-format postman --output postman-collection.json
+restdocs-to-postman --input generated-snippets --export-format postman --determine-folder secondLastFolder --output postman-collection.json
 ```
 
 From the given folder, all folders are recursively scanned for `curl-request.adoc` and `curl-request.md` files.
+Requests can be sorted into folders with `--determine-folder secondLastFolder`.
+The function `secondLastFolder` is the only one for now and puts a request from `../items/get/curl-request.adoc` into a folder called `item`.
 Host and header replacements can be used with `--replacements replacements.json`.
 See [replacement-example.json](https://github.com/fbenz/restdocs-to-postman/blob/master/replacements-example.json)
 for an example of a replacement file.
@@ -48,7 +50,7 @@ for an example of a replacement file.
 const converter = require('restdocs-to-postman');
 
 // Convert Spring REST Docs cURL commands to Postman/Insomnia collections
-const folder = './target/generated-snippets';
+const folderToScan = './target/generated-snippets';
 const exportFormat = 'postman';
 const replacements = {
   host: {
@@ -62,7 +64,7 @@ const replacements = {
      }
   ]
 };
-const output = converter.convert(folder, exportFormat, replacements);
+const output = converter.convert({folderToScan, exportFormat, replacements});
 
 // Print the result
 console.log(output);
