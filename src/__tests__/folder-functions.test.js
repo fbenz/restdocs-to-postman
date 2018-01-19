@@ -35,3 +35,15 @@ describe('secondLastFolder should convert a given path to', () => {
         expect(actual).toBeNull();
     });
 });
+
+describe('nameToFunction should convert', () => {
+    it('the known function secondLastFolder', () => {
+        const actual = folderFunctions.nameToFunction('secondLastFolder');
+        expect(actual).toEqual(folderFunctions.secondLastFolder);
+    });
+
+    it('an unknown name to an error', () => {
+        const actual = () => folderFunctions.nameToFunction('unknownFunction');
+        expect(actual).toThrow('Unknown folder function: unknownFunction');
+    });
+});
