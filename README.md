@@ -38,6 +38,8 @@ restdocs-to-postman --input generated-snippets --export-format postman --determi
 ```
 
 From the given folder, all folders are recursively scanned for `curl-request.adoc` and `curl-request.md` files.
+Requests can be sorted into folders with `--determine-folder secondLastFolder`.
+The function `secondLastFolder` is the only one for now and puts a request from `../items/get/curl-request.adoc` into a folder called `item`.
 Host and header replacements can be used with `--replacements replacements.json`.
 See [replacement-example.json](https://github.com/fbenz/restdocs-to-postman/blob/master/replacements-example.json)
 for an example of a replacement file.
