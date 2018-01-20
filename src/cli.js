@@ -41,7 +41,7 @@ module.exports.go = function () {
         folderToScan: program.input,
         exportFormat: program.exportFormat,
         replacements: replacements,
-        determineFolder: folderFunctions.nameToFunction(program.folderFunction)
+        determineFolder: folderFunctions.nameToFunction(program.determineFolder)
     });
     // Output/write result
     if (program.output) {
