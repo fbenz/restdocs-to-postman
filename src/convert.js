@@ -21,6 +21,7 @@ const curlToInsomnia = require('./curl-to-insomnia3');
 const insomniaToPostman = require('./insomnia3-to-postman21');
 const insomniaReplacements = require('./insomnia-replacements');
 const postmanReplacements = require('./postman-replacements');
+const postmanAttachments = require('./postman-attachments');
 
 const curlFromRestDocsFile = filename => {
     const data = fs.readFileSync(filename, 'utf8');
@@ -54,7 +55,7 @@ const shortenName = (insomniaItem) => {
  * @return {?string}
  */
 module.exports.convert = (options) => {
-    let {folderToScan, exportFormat, replacements, determineFolder} = options;
+    let {folderToScan, exportFormat, replacements, attachments, determineFolder} = options;
     const results = utils.traverseFilesSync(folderToScan);
     if (!results) {
         return null;
@@ -84,6 +85,7 @@ module.exports.convert = (options) => {
     } else if (exportFormat === 'postman') {
         const postmanCollection = insomniaToPostman.toPostmanCollection(insomniaCollection);
         postmanReplacements.performPostmanReplacements(postmanCollection, replacements);
+        postmanAttachments.performPostmanAttachments(postmanCollection, attachments);
         return JSON.stringify(postmanCollection);
     } else {
         throw new Error('Unknown export format: ' + exportFormat);

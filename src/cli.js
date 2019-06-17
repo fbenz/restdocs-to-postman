@@ -30,17 +30,23 @@ module.exports.go = function () {
         .option('-o, --output [file]', 'output file')
         .option('-r, --replacements [file]', 'optional JSON file with replacements')
         .option('-f, --determine-folder [function name]', 'optional function to structure requests into folders')
+        .option('-t, --attachments [file]', 'optional JSON file with attachments')
         .parse(process.argv);
 
-    let replacements;
+    let replacements, attachments;
     if (program.replacements) {
         replacements = JSON.parse(fs.readFileSync(program.replacements, 'utf8'));
     }
+    if (program.attachments) {
+        attachments = JSON.parse(fs.readFileSync(program.attachments, 'utf8'));
+    }
+
     // Conversion
     const result = converter.convert({
         folderToScan: program.input,
         exportFormat: program.exportFormat,
         replacements: replacements,
+        attachments: attachments,
         determineFolder: folderFunctions.nameToFunction(program.determineFolder)
     });
     // Output/write result
