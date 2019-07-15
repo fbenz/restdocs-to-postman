@@ -91,21 +91,79 @@ const toPostmanItem = (insomniaItem) => {
     };
 };
 
-const toPostmanFolder = (insomniaRequestGroup) => {
-    return {
+/**
+ * Create an object to hold the name and array of items for the Postman collection.  This method will place the folder
+ * object in the folderMap based on its _id, and also place push it into the item array of its parent if applicable.
+ * The folderMap can then be used to access any folder by its id, and later when the insomniaResource is converted in
+ * toPostmanItem, the reference to the object in the parent's item array will also be updated.
+ * @param insomniaRequestGroup
+ * @param folderMap
+ * @param topLevelItems
+ */
+const toPostmanFolder = (insomniaRequestGroup, folderMap, topLevelItems) => {
+    var folder = {
         name: insomniaRequestGroup.name,
         item: []
     }
+
+    if (folderMap[insomniaRequestGroup.parentId]) {
+        folderMap[insomniaRequestGroup.parentId].item.push(folder);
+    } else {
+        topLevelItems[insomniaRequestGroup._id] = folder;
+    }
+
+    folderMap[insomniaRequestGroup._id] = folder;
 };
 
+/**
+ * Extracts the number from the FolderId so it can be compared as an integer instead of a string (solving 1 vs 10 comparison issues)
+ * @param folderId __FOLDER_1__
+ * @returns For __FOLDER_1__, returns 1
+ */
+const getFolderNumberFromId = (folderId) => {
+    const folderRegex = /^__FOLDER_([0-9]*)__/g;
+    var match = folderRegex.exec(folderId);
+
+    if (match) {
+        return match[1];
+    }
+    return -1;
+}
+
+/**
+ * Recursively sort folders by their name
+ * @param folders Initially the top level folders, then any subFolder item arrays
+ * @returns sorted array of folders
+ */
+const sortFolders = (folders) => {
+    folders = Object.values(folders)
+        .sort((a, b) => {
+            a.name.localeCompare(b.name)
+        });
+    folders.forEach(folder => {
+        if (folder.item && folder.item.length > 0) {
+            folder.item = sortFolders(folder.item);
+        }
+    });
+    return folders;
+}
+
 module.exports.toPostmanCollection = (insomniaCollection) => {
-    const folderMap = {};
-    insomniaCollection.resources
+
+    //First sort all resources by folder id, so that the logic below to create the folders will be guaranteed to create
+    //parent level folders before child folders.
+    const allResourcesSortedById = Object.values(insomniaCollection.resources)
         .filter(r => r._type === 'request_group')
-        .forEach(r => folderMap[r._id] = toPostmanFolder(r));
+        .sort((a, b) => parseInt(getFolderNumberFromId(a._id), 10) - parseInt(getFolderNumberFromId(b._id), 10));
+
+    const folderMap = {};
+    var topLevelItems = {}
+    allResourcesSortedById
+        .filter(r => r._type === 'request_group')
+        .forEach(r => toPostmanFolder(r, folderMap, topLevelItems));
 
     // Folders come first and are sorted by name.
-    const topLevelItems = Object.values(folderMap).sort((a, b) => a.name.localeCompare(b.name));
+    topLevelItems = sortFolders(topLevelItems);
 
     insomniaCollection.resources
         .filter(r => r._type === 'request')

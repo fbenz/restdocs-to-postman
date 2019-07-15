@@ -72,7 +72,7 @@ module.exports.convert = (options) => {
             }
         }
     });
-    const insomniaCollection = curlToInsomnia.toInsomniaCollection(determineFolder, allCurls);
+    const insomniaCollection = curlToInsomnia.toInsomniaCollection(determineFolder, allCurls, folderToScan);
     insomniaCollection.resources.forEach(i => {
         if (i._type === 'request') {
             shortenName(i);

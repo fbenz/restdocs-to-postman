@@ -15,10 +15,35 @@
  */
 const path = require('path');
 
-module.exports.secondLastFolder = (filePath, url) => {
+module.exports.secondLastFolder = (filePath, url, folderToScan) => {
     const parts = filePath.split(path.sep);
     if (parts.length >= 3) {
         return parts[parts.length - 3];
+    } else {
+        return null;
+    }
+};
+
+/**
+ * Returns a string delimited by "/" of folders for endpoints.
+ * @param filePath  Absolute file path to curl resource (i.e. /project-directory/generated-snippets/name/get/curl-request.adoc
+ * @param url Unused, but the URL in the curl request
+ * @param folderToScan Original source folder to scan for restdocs.  Used as the string to determine top level folder in filePath (i.e. generated-snippets).
+ * @returns {*}
+ */
+module.exports.nestedFolders = (filePath, url, folderToScan) => {
+    const parts = filePath.split(path.sep);
+    if (parts.length >= 3) {
+        const folderToScanParts = folderToScan.split(path.sep);
+        const lastFolderIndex = parts.length - 3;
+        var nestedFolderParts = [];
+        parts.forEach(function(part, index) {
+            if (part === folderToScanParts[folderToScanParts.length - 1]) {
+                nestedFolderParts = parts.splice(index + 1, (lastFolderIndex - index));
+            }
+        });
+
+        return nestedFolderParts.join("/");
     } else {
         return null;
     }
@@ -35,6 +60,8 @@ module.exports.nameToFunction = (name) => {
     switch (name) {
         case 'secondLastFolder':
             return module.exports.secondLastFolder;
+        case 'nestedFolders':
+            return module.exports.nestedFolders;
         default:
             throw new Error('Unknown folder function: ' + name);
     }

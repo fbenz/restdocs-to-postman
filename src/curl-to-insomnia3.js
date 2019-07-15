@@ -21,13 +21,16 @@
 const importers = require('insomnia-importers');
 const {version} = require('../package.json');
 
+const TOP_LEVEL = "topLevel";
+
 /**
  * @param {function(path: string, url: string): ?string} determineFolder
  * @param {{path: string, resource: Object}} resourceWrapper
+ * @param {?string} Original --input argument value
  * @return {?string} optional folder name
  */
-const toFolder = (determineFolder, resourceWrapper) => {
-    return determineFolder(resourceWrapper.path, resourceWrapper.resource.url);
+const toFolder = (determineFolder, resourceWrapper, folderToScan) => {
+    return determineFolder(resourceWrapper.path, resourceWrapper.resource.url, folderToScan);
 };
 
 /**
@@ -35,29 +38,25 @@ const toFolder = (determineFolder, resourceWrapper) => {
  * @param {Array<{path: string, resource: Object}>} resourceWrappers
  * @return {Array<Object>} Array of Insomnia resources representing all folders
  */
-const addFolders = (determineFolder, resourceWrappers) => {
+const addFolders = (determineFolder, resourceWrappers, folderToScan) => {
+
     const folderResources = [];
+
     if (!determineFolder) {
         return folderResources;
     }
     let folderCount = 0;
     const folderNameToId = {};
+    folderNameToId[TOP_LEVEL] = '__WORKSPACE_ID__';
+
     resourceWrappers.forEach(resourceWrapper => {
-        const folder = toFolder(determineFolder, resourceWrapper);
-        if (folder) {
-            if (folderNameToId[folder]) {
-                resourceWrapper.resource.parentId = folderNameToId[folder];
+        var folderName = toFolder(determineFolder, resourceWrapper, folderToScan);
+        if (folderName) {
+            //If a / character is in the string from the folder function, then there are nested folders that need to be created
+            if (folderName.includes("/")) {
+                folderCount = createNestedFolders(folderName, folderNameToId, folderResources, resourceWrapper, folderCount);
             } else {
-                folderCount++;
-                const folderId = `__FOLDER_${folderCount}__`;
-                folderResources.push({
-                    _type: 'request_group',
-                    _id: `__FOLDER_${folderCount}__`,
-                    name: folder,
-                    parentId: '__WORKSPACE_ID__'
-                });
-                resourceWrapper.resource.parentId = folderId;
-                folderNameToId[folder] = folderId;
+                folderCount = createFolder(folderName, folderNameToId, folderResources, resourceWrapper, TOP_LEVEL, folderCount);
             }
         }
     });
@@ -68,10 +67,73 @@ const addFolders = (determineFolder, resourceWrappers) => {
 };
 
 /**
+ * Loop through the parts of a folder name delimited by "/", and create a folder in the appropriate location in the tree
+ * of folders for each part.
+ * @param nestedFolderPath
+ * @param folderNameToId
+ * @param folderResources
+ * @param resourceWrapper
+ * @param folderCount
+ * @returns {*}
+ */
+const createNestedFolders = (nestedFolderPath, folderNameToId, folderResources, resourceWrapper, folderCount) => {
+    var currentParentFolderName = TOP_LEVEL;
+
+    const subFolders = nestedFolderPath.split("/");
+    subFolders.forEach(function(subFolder) {
+        folderCount = createFolder(subFolder, folderNameToId, folderResources, resourceWrapper, currentParentFolderName, folderCount);
+
+        currentParentFolderName += subFolder;
+        resourceWrapper.resource.parentId = folderNameToId[currentParentFolderName];
+    });
+
+    return folderCount;
+};
+
+/**
+ * Create a folderResource object and push it into the folderResources array.  This is only done if the folder with the
+ * given name has not already been created.
+ * @param folderName
+ * @param folderNameToId
+ * @param folderResources
+ * @param resourceWrapper
+ * @param parentFolderName
+ * @param folderCount
+ * @returns {*}
+ */
+const createFolder = (folderName, folderNameToId, folderResources, resourceWrapper, parentFolderName, folderCount) => {
+
+    //Concatenate the folder name onto the parent name to use as the key in the folderNameToId map so that if a sub folder
+    //name exactly matches another sub folder in a different parent, it is still created below and placed in the proper
+    //location in the tree.  For example,  the "items" folder below needs to be created under both search and store folders:
+    //   topLevel/search/items
+    //   topLevel/store/items
+    const folderNameWithParentNames = parentFolderName + folderName;
+
+    if (folderNameToId[folderNameWithParentNames]) {
+        resourceWrapper.resource.parentId = folderNameToId[folderNameWithParentNames];
+    } else {
+        folderCount++;
+        const folderId = `__FOLDER_${folderCount}__`;
+        var folderResource = {
+            _type: 'request_group',
+            _id: folderId,
+            name: folderName,
+            parentId: folderNameToId[parentFolderName]
+        };
+
+        folderResources.push(folderResource);
+        folderNameToId[folderNameWithParentNames] = resourceWrapper.resource.parentId = folderResource._id;
+    }
+
+    return folderCount;
+};
+
+/**
  * @param {function(path: string, url: string): ?string} determineFolder
  * @param {Array<{path: string, curl: string}>} curlCommands
  */
-module.exports.toInsomniaCollection = (determineFolder, curlCommands) => {
+module.exports.toInsomniaCollection = (determineFolder, curlCommands, folderToScan) => {
     const resourceWrappers = curlCommands.map(c => {
         return {
             path: c.path,
@@ -79,7 +141,7 @@ module.exports.toInsomniaCollection = (determineFolder, curlCommands) => {
         }
     });
 
-    const folderResources = addFolders(determineFolder, resourceWrappers);
+    const folderResources = addFolders(determineFolder, resourceWrappers, folderToScan);
 
     const requestResources = resourceWrappers.map((resourceWrapper, index) => {
         resourceWrapper.resource._id = `__REQ_${index + 1}__`;

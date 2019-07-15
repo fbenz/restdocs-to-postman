@@ -1,0 +1,67 @@
+{
+  "__export_date": "2019-07-15T20:13:03.160Z",
+  "__export_format": 3,
+  "__export_source": "restdocs-to-postman:v2.0.4",
+  "_type": "export",
+  "resources": [
+    {
+      "_id": "__FOLDER_3__",
+      "_type": "request_group",
+      "metaSortKey": 0,
+      "name": "matching-third-level",
+      "parentId": "__FOLDER_2__"
+    },
+    {
+      "_id": "__FOLDER_5__",
+      "_type": "request_group",
+      "metaSortKey": 1,
+      "name": "matching-third-level",
+      "parentId": "__FOLDER_4__"
+    },
+    {
+      "_id": "__FOLDER_2__",
+      "_type": "request_group",
+      "metaSortKey": 2,
+      "name": "second-level-one",
+      "parentId": "__FOLDER_1__"
+    },
+    {
+      "_id": "__FOLDER_4__",
+      "_type": "request_group",
+      "metaSortKey": 3,
+      "name": "second-level-two",
+      "parentId": "__FOLDER_1__"
+    },
+    {
+      "_id": "__FOLDER_1__",
+      "_type": "request_group",
+      "metaSortKey": 4,
+      "name": "top-level-folder",
+      "parentId": "__WORKSPACE_ID__"
+    },
+    {
+      "_id": "__REQ_1__",
+      "_type": "request",
+      "authentication": {},
+      "body": {},
+      "headers": [],
+      "method": "GET",
+      "name": "docs",
+      "parameters": [],
+      "parentId": "__FOLDER_3__",
+      "url": "http://localhost:8080/docs"
+    },
+    {
+      "_id": "__REQ_2__",
+      "_type": "request",
+      "authentication": {},
+      "body": {},
+      "headers": [],
+      "method": "GET",
+      "name": "index",
+      "parameters": [],
+      "parentId": "__FOLDER_5__",
+      "url": "http://localhost:8080/"
+    }
+  ]
+}

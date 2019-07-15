@@ -1,0 +1,352 @@
+{
+  "info": {
+    "name": "REST Docs to Postman",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "item": [
+        {
+          "item": [
+            {
+              "name": "docs",
+              "request": {
+                "body": null,
+                "header": [],
+                "method": "GET",
+                "url": {
+                  "host": [
+                    "http://localhost:8080"
+                  ],
+                  "path": [
+                    "",
+                    "docs"
+                  ],
+                  "raw": "http://localhost:8080/docs"
+                }
+              }
+            },
+            {
+              "name": "index",
+              "request": {
+                "body": null,
+                "header": [],
+                "method": "GET",
+                "url": {
+                  "host": [
+                    "http://localhost:8080"
+                  ],
+                  "path": [
+                    "",
+                    ""
+                  ],
+                  "raw": "http://localhost:8080/"
+                }
+              }
+            }
+          ],
+          "name": "documentation-test"
+        },
+        {
+          "item": [
+            {
+              "name": "items",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"description\":\"Hot News\"}"
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer 8114cde8-26dd-4c61-b601-29f945b67d25"
+                  }
+                ],
+                "method": "POST",
+                "url": {
+                  "host": [
+                    "http://localhost:8080"
+                  ],
+                  "path": [
+                    "",
+                    "items"
+                  ],
+                  "raw": "http://localhost:8080/items"
+                }
+              }
+            },
+            {
+              "name": "items/cloneItem",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "raw": "{ \"name\": \"xyz\" }"
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "url": {
+                  "host": [
+                    "http://localhost:8080"
+                  ],
+                  "path": [
+                    "",
+                    "items",
+                    "cloneItem"
+                  ],
+                  "raw": "http://localhost:8080/items/cloneItem"
+                }
+              }
+            },
+            {
+              "name": "items/1",
+              "request": {
+                "body": null,
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer 8114cde8-26dd-4c61-b601-29f945b67d25"
+                  }
+                ],
+                "method": "DELETE",
+                "url": {
+                  "host": [
+                    "http://localhost:8080"
+                  ],
+                  "path": [
+                    "",
+                    "items",
+                    "1"
+                  ],
+                  "raw": "http://localhost:8080/items/1"
+                }
+              }
+            },
+            {
+              "name": "items",
+              "request": {
+                "body": null,
+                "header": [],
+                "method": "GET",
+                "url": {
+                  "host": [
+                    "http://localhost:8080"
+                  ],
+                  "path": [
+                    "",
+                    "items"
+                  ],
+                  "raw": "http://localhost:8080/items"
+                }
+              }
+            },
+            {
+              "name": "items/1/child-1",
+              "request": {
+                "body": null,
+                "header": [],
+                "method": "GET",
+                "url": {
+                  "host": [
+                    "http://localhost:8080"
+                  ],
+                  "path": [
+                    "",
+                    "items",
+                    "1",
+                    "child-1"
+                  ],
+                  "raw": "http://localhost:8080/items/1/child-1"
+                }
+              }
+            },
+            {
+              "name": "items/1",
+              "request": {
+                "body": null,
+                "header": [],
+                "method": "GET",
+                "url": {
+                  "host": [
+                    "http://localhost:8080"
+                  ],
+                  "path": [
+                    "",
+                    "items",
+                    "1"
+                  ],
+                  "raw": "http://localhost:8080/items/1"
+                }
+              }
+            },
+            {
+              "name": "items/process",
+              "request": {
+                "body": {
+                  "formdata": [
+                    {
+                      "key": "command",
+                      "value": "increase"
+                    },
+                    {
+                      "key": "value",
+                      "value": "2"
+                    }
+                  ],
+                  "mode": "formdata"
+                },
+                "header": [],
+                "method": "POST",
+                "url": {
+                  "host": [
+                    "http://localhost:8080"
+                  ],
+                  "path": [
+                    "",
+                    "items",
+                    "process"
+                  ],
+                  "raw": "http://localhost:8080/items/process"
+                }
+              }
+            },
+            {
+              "name": "items/1/process",
+              "request": {
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "command",
+                      "value": "increase"
+                    },
+                    {
+                      "key": "value",
+                      "value": "3"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "method": "POST",
+                "url": {
+                  "host": [
+                    "http://localhost:8080"
+                  ],
+                  "path": [
+                    "",
+                    "items",
+                    "1",
+                    "process"
+                  ],
+                  "raw": "http://localhost:8080/items/1/process"
+                }
+              }
+            },
+            {
+              "name": "items/search",
+              "request": {
+                "body": null,
+                "header": [],
+                "method": "GET",
+                "url": {
+                  "host": [
+                    "http://localhost:8080"
+                  ],
+                  "path": [
+                    "",
+                    "items",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "desc",
+                      "value": "main"
+                    },
+                    {
+                      "key": "hint",
+                      "value": "1"
+                    }
+                  ],
+                  "raw": "http://localhost:8080/items/search?desc=main&hint=1"
+                }
+              }
+            },
+            {
+              "name": "items/1",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"description\":\"Hot News\"}"
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer 8114cde8-26dd-4c61-b601-29f945b67d25"
+                  }
+                ],
+                "method": "PUT",
+                "url": {
+                  "host": [
+                    "http://localhost:8080"
+                  ],
+                  "path": [
+                    "",
+                    "items",
+                    "1"
+                  ],
+                  "raw": "http://localhost:8080/items/1"
+                }
+              }
+            },
+            {
+              "name": "items/validateMetadata",
+              "request": {
+                "body": {
+                  "mode": "raw",
+                  "raw": "{ \"type\": \"1\", \"tag\": \"myItem\" }"
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "url": {
+                  "host": [
+                    "http://localhost:8080"
+                  ],
+                  "path": [
+                    "",
+                    "items",
+                    "validateMetadata"
+                  ],
+                  "raw": "http://localhost:8080/items/validateMetadata"
+                }
+              }
+            }
+          ],
+          "name": "item-resource-test"
+        }
+      ],
+      "name": "top-level-folder"
+    }
+  ]
+}

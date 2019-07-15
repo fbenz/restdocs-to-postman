@@ -36,6 +36,32 @@ describe('secondLastFolder should convert a given path to', () => {
     });
 });
 
+describe('nestedFolders should convert a given path', () => {
+    it('to the second to last folder if the folderToScan is the parent folder', () => {
+        const givenPath = toSystemPath('generated-snippets/items/get/curl-request.adoc');
+        const actual = folderFunctions.nestedFolders(givenPath, null, 'generated-snippets');
+        expect(actual).toEqual('items');
+    });
+
+    it('to path separated folder name two levels deep if a second folder depth is found past the folderToScan', () => {
+        const givenPath = toSystemPath('generated-snippets/collection/items/get/curl-request.adoc');
+        const actual = folderFunctions.nestedFolders(givenPath, null, 'generated-snippets');
+        expect(actual).toEqual('collection/items');
+    });
+
+    it('to path separated folder name two levels deep if a second folder depth is found past the folderToScan when folderToScan is nested as well', () => {
+        const givenPath = toSystemPath('generated-snippets/collection/items/get/curl-request.adoc');
+        const actual = folderFunctions.nestedFolders(givenPath, null, 'target/generated-snippets');
+        expect(actual).toEqual('collection/items');
+    });
+
+    it('to path separated folder name five levels deep if a fifth folder depth is found past the folderToScan', () => {
+        const givenPath = toSystemPath('generated-snippets/a/deep/collection/of/endpoints/items/get/curl-request.adoc');
+        const actual = folderFunctions.nestedFolders(givenPath, null, 'generated-snippets');
+        expect(actual).toEqual('a/deep/collection/of/endpoints/items');
+    });
+});
+
 describe('nameToFunction should convert', () => {
     it('the known function secondLastFolder', () => {
         const actual = folderFunctions.nameToFunction('secondLastFolder');
