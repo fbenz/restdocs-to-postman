@@ -93,7 +93,7 @@ const createNestedFolders = (nestedFolderPath, folderNameToId, folderResources, 
 /**
  * Create a folderResource object and push it into the folderResources array.  This is only done if the folder with the
  * given name has not already been created.
- * @param {String} nestedFolderPath Complete path of the nested folder (i.e. top-level-folder/documentation-test)
+ * @param {String} folderName Complete path of the nested folder (i.e. top-level-folder/documentation-test)
  * @param {String} folderNameToId The map of folder names to their folderIds.
  * @param {Array<Object>} folderResources Array of folderResource objects used to create the Insomnia collection
  * @param {Object} resourceWrapper The resourceWrapper object that was created for each curl command in toInsomniaCollection
