@@ -69,12 +69,12 @@ const addFolders = (determineFolder, resourceWrappers, folderToScan) => {
 /**
  * Loop through the parts of a folder name delimited by "/", and create a folder in the appropriate location in the tree
  * of folders for each part.
- * @param nestedFolderPath
- * @param folderNameToId
- * @param folderResources
- * @param resourceWrapper
- * @param folderCount
- * @returns {*}
+ * @param {String} nestedFolderPath Complete path of the nested folder (i.e. top-level-folder/documentation-test)
+ * @param {String} folderNameToId The map of folder names to their folderIds.
+ * @param {Array<Object>} folderResources Array of folderResource objects used to create the Insomnia collection
+ * @param {Object} resourceWrapper The resourceWrapper object that was created for each curl command in toInsomniaCollection
+ * @param {Number} folderCount The ongoing counter of folders, used to ensure unique folderId for each one created.
+ * @returns {Number} The updated folder count after all nested folders have been created.
  */
 const createNestedFolders = (nestedFolderPath, folderNameToId, folderResources, resourceWrapper, folderCount) => {
     var currentParentFolderName = TOP_LEVEL;
@@ -93,13 +93,13 @@ const createNestedFolders = (nestedFolderPath, folderNameToId, folderResources, 
 /**
  * Create a folderResource object and push it into the folderResources array.  This is only done if the folder with the
  * given name has not already been created.
- * @param folderName
- * @param folderNameToId
- * @param folderResources
- * @param resourceWrapper
- * @param parentFolderName
- * @param folderCount
- * @returns {*}
+ * @param {String} nestedFolderPath Complete path of the nested folder (i.e. top-level-folder/documentation-test)
+ * @param {String} folderNameToId The map of folder names to their folderIds.
+ * @param {Array<Object>} folderResources Array of folderResource objects used to create the Insomnia collection
+ * @param {Object} resourceWrapper The resourceWrapper object that was created for each curl command in toInsomniaCollection
+ * @param {String} parentFolderName The name of the parent folder, used to maintain the folder hierarchy
+ * @param {Number} folderCount The ongoing counter of folders, used to ensure unique folderId for each one created.
+ * @returns {Number} the updated folder count after this folder has been created.
  */
 const createFolder = (folderName, folderNameToId, folderResources, resourceWrapper, parentFolderName, folderCount) => {
 

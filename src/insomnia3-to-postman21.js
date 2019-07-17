@@ -96,9 +96,9 @@ const toPostmanItem = (insomniaItem) => {
  * object in the folderMap based on its _id, and also place push it into the item array of its parent if applicable.
  * The folderMap can then be used to access any folder by its id, and later when the insomniaResource is converted in
  * toPostmanItem, the reference to the object in the parent's item array will also be updated.
- * @param insomniaRequestGroup
- * @param folderMap
- * @param topLevelItems
+ * @param {Object} insomniaRequestGroup The request group object from the Insomnia collection created in curl-to-insomnia3
+ * @param {Object} folderMap The map of folder object, keyed off of the folderId
+ * @param {Object} topLevelItems The map of folders at the top level of the collection
  */
 const toPostmanFolder = (insomniaRequestGroup, folderMap, topLevelItems) => {
     var folder = {
@@ -117,8 +117,8 @@ const toPostmanFolder = (insomniaRequestGroup, folderMap, topLevelItems) => {
 
 /**
  * Extracts the number from the FolderId so it can be compared as an integer instead of a string (solving 1 vs 10 comparison issues)
- * @param folderId __FOLDER_1__
- * @returns For __FOLDER_1__, returns 1
+ * @param {String} folderId __FOLDER_1__
+ * @returns {Number} For __FOLDER_1__, returns 1
  */
 const getFolderNumberFromId = (folderId) => {
     const folderRegex = /^__FOLDER_([0-9]*)__/g;
@@ -132,8 +132,8 @@ const getFolderNumberFromId = (folderId) => {
 
 /**
  * Recursively sort folders by their name
- * @param folders Initially the top level folders, then any subFolder item arrays
- * @returns sorted array of folders
+ * @param {Object} folders Initially the top level folders, then any subFolder item arrays
+ * @returns {Array<Object>} sorted array of folders
  */
 const sortFolders = (folders) => {
     folders = Object.values(folders)
