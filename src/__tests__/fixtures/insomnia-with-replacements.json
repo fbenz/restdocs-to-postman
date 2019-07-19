@@ -1,43 +1,41 @@
 {
-  "_type": "export",
+  "__export_date": "2019-07-17T21:28:07.724Z",
   "__export_format": 3,
-  "__export_date": "test",
-  "__export_source": "test",
+  "__export_source": "restdocs-to-postman:v2.0.4",
+  "_type": "export",
   "resources": [
     {
-      "parentId": "__WORKSPACE_ID__",
-      "name": "docs",
-      "url": "{{host}}/docs",
-      "body": {},
-      "method": "GET",
-      "parameters": [],
-      "headers": [],
-      "authentication": {},
       "_id": "__REQ_1__",
-      "_type": "request"
-    },
-    {
-      "parentId": "__WORKSPACE_ID__",
-      "name": "index",
-      "url": "{{host}}/",
-      "body": {},
-      "method": "GET",
-      "parameters": [],
-      "headers": [],
+      "_type": "request",
       "authentication": {},
-      "_id": "__REQ_2__",
-      "_type": "request"
+      "body": {},
+      "headers": [],
+      "method": "GET",
+      "name": "docs",
+      "parameters": [],
+      "parentId": "__WORKSPACE_ID__",
+      "url": "{{host}}/docs"
     },
     {
+      "_id": "__REQ_2__",
+      "_type": "request",
+      "authentication": {},
+      "body": {},
+      "headers": [],
+      "method": "GET",
+      "name": "index",
+      "parameters": [],
       "parentId": "__WORKSPACE_ID__",
-      "name": "items",
-      "url": "{{host}}/items",
+      "url": "{{host}}/"
+    },
+    {
+      "_id": "__REQ_3__",
+      "_type": "request",
+      "authentication": {},
       "body": {
         "mimeType": "application/json",
         "text": "{\"description\":\"Hot News\"}"
       },
-      "method": "POST",
-      "parameters": [],
       "headers": [
         {
           "name": "Content-Type",
@@ -48,113 +46,115 @@
           "value": "Bearer {{oauth2Token}}"
         }
       ],
-      "authentication": {},
-      "_id": "__REQ_3__",
-      "_type": "request"
+      "method": "POST",
+      "name": "items",
+      "parameters": [],
+      "parentId": "__WORKSPACE_ID__",
+      "url": "{{host}}/items"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
-      "name": "items/cloneItem",
-      "url": "{{host}}/items/cloneItem",
+      "_id": "__REQ_4__",
+      "_type": "request",
+      "authentication": {},
       "body": {
         "mimeType": "application/json",
         "text": "{ \"name\": \"xyz\" }"
       },
-      "method": "POST",
-      "parameters": [],
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
         }
       ],
-      "authentication": {},
-      "_id": "__REQ_4__",
-      "_type": "request"
+      "method": "POST",
+      "name": "items/cloneItem",
+      "parameters": [],
+      "parentId": "__WORKSPACE_ID__",
+      "url": "{{host}}/items/cloneItem"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
-      "name": "items/1",
-      "url": "{{host}}/items/1",
+      "_id": "__REQ_5__",
+      "_type": "request",
+      "authentication": {},
       "body": {},
-      "method": "DELETE",
-      "parameters": [],
       "headers": [
         {
           "name": "Authorization",
           "value": "Bearer {{oauth2Token}}"
         }
       ],
-      "authentication": {},
-      "_id": "__REQ_5__",
-      "_type": "request"
+      "method": "DELETE",
+      "name": "items/{{itemId}}",
+      "parameters": [],
+      "parentId": "__WORKSPACE_ID__",
+      "url": "{{host}}/items/{{itemId}}"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
-      "name": "items",
-      "url": "{{host}}/items",
-      "body": {},
-      "method": "GET",
-      "parameters": [],
-      "headers": [],
-      "authentication": {},
       "_id": "__REQ_6__",
-      "_type": "request"
+      "_type": "request",
+      "authentication": {},
+      "body": {},
+      "headers": [],
+      "method": "GET",
+      "name": "items",
+      "parameters": [],
+      "parentId": "__WORKSPACE_ID__",
+      "url": "{{host}}/items"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
-      "name": "items/1/child-1",
-      "url": "{{host}}/items/1/child-1",
-      "body": {},
-      "method": "GET",
-      "parameters": [],
-      "headers": [],
-      "authentication": {},
       "_id": "__REQ_7__",
-      "_type": "request"
-    },
-    {
-      "parentId": "__WORKSPACE_ID__",
-      "name": "items/1",
-      "url": "{{host}}/items/1",
-      "body": {},
-      "method": "GET",
-      "parameters": [],
-      "headers": [],
+      "_type": "request",
       "authentication": {},
-      "_id": "__REQ_8__",
-      "_type": "request"
+      "body": {},
+      "headers": [],
+      "method": "GET",
+      "name": "items/{{itemId}}/child-1",
+      "parameters": [],
+      "parentId": "__WORKSPACE_ID__",
+      "url": "{{host}}/items/{{itemId}}/child-1"
     },
     {
+      "_id": "__REQ_8__",
+      "_type": "request",
+      "authentication": {},
+      "body": {},
+      "headers": [],
+      "method": "GET",
+      "name": "items/{{itemId}}",
+      "parameters": [],
       "parentId": "__WORKSPACE_ID__",
-      "name": "items/process",
-      "url": "{{host}}/items/process",
+      "url": "{{host}}/items/{{itemId}}"
+    },
+    {
+      "_id": "__REQ_9__",
+      "_type": "request",
+      "authentication": {},
       "body": {
+        "mimeType": "multipart/form-data",
         "params": [
           {
             "name": "command",
-            "value": "increase",
-            "type": "text"
+            "type": "text",
+            "value": "increase"
           },
           {
             "name": "value",
-            "value": "2",
-            "type": "text"
+            "type": "text",
+            "value": "2"
           }
-        ],
-        "mimeType": "multipart/form-data"
+        ]
       },
-      "method": "POST",
-      "parameters": [],
       "headers": [],
-      "authentication": {},
-      "_id": "__REQ_9__",
-      "_type": "request"
+      "method": "POST",
+      "name": "items/process",
+      "parameters": [],
+      "parentId": "__WORKSPACE_ID__",
+      "url": "{{host}}/items/process"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
-      "name": "items/1/process",
-      "url": "{{host}}/items/1/process",
+      "_id": "__REQ_10__",
+      "_type": "request",
+      "authentication": {},
       "body": {
         "mimeType": "application/x-www-form-urlencoded",
         "params": [
@@ -168,40 +168,38 @@
           }
         ]
       },
-      "method": "POST",
-      "parameters": [],
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/x-www-form-urlencoded"
         }
       ],
-      "authentication": {},
-      "_id": "__REQ_10__",
-      "_type": "request"
-    },
-    {
-      "parentId": "__WORKSPACE_ID__",
-      "name": "items/search",
-      "url": "{{host}}/items/search?desc=main&hint=1",
-      "body": {},
-      "method": "GET",
+      "method": "POST",
+      "name": "items/{{itemId}}/process",
       "parameters": [],
-      "headers": [],
-      "authentication": {},
-      "_id": "__REQ_11__",
-      "_type": "request"
+      "parentId": "__WORKSPACE_ID__",
+      "url": "{{host}}/items/{{itemId}}/process"
     },
     {
+      "_id": "__REQ_11__",
+      "_type": "request",
+      "authentication": {},
+      "body": {},
+      "headers": [],
+      "method": "GET",
+      "name": "items/search",
+      "parameters": [],
       "parentId": "__WORKSPACE_ID__",
-      "name": "items/1",
-      "url": "{{host}}/items/1",
+      "url": "{{host}}/items/search?desc=main&hint=1"
+    },
+    {
+      "_id": "__REQ_12__",
+      "_type": "request",
+      "authentication": {},
       "body": {
         "mimeType": "application/json",
         "text": "{\"description\":\"Hot News\"}"
       },
-      "method": "PUT",
-      "parameters": [],
       "headers": [
         {
           "name": "Content-Type",
@@ -212,29 +210,31 @@
           "value": "Bearer {{oauth2Token}}"
         }
       ],
-      "authentication": {},
-      "_id": "__REQ_12__",
-      "_type": "request"
+      "method": "PUT",
+      "name": "items/{{itemId}}",
+      "parameters": [],
+      "parentId": "__WORKSPACE_ID__",
+      "url": "{{host}}/items/{{itemId}}"
     },
     {
-      "parentId": "__WORKSPACE_ID__",
-      "name": "items/validateMetadata",
-      "url": "{{host}}/items/validateMetadata",
+      "_id": "__REQ_13__",
+      "_type": "request",
+      "authentication": {},
       "body": {
         "mimeType": "application/json",
         "text": "{ \"type\": \"1\", \"tag\": \"myItem\" }"
       },
-      "method": "POST",
-      "parameters": [],
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
         }
       ],
-      "authentication": {},
-      "_id": "__REQ_13__",
-      "_type": "request"
+      "method": "POST",
+      "name": "items/validateMetadata",
+      "parameters": [],
+      "parentId": "__WORKSPACE_ID__",
+      "url": "{{host}}/items/validateMetadata"
     }
   ]
 }

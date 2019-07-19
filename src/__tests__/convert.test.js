@@ -33,6 +33,13 @@ const exampleReplacements = {
             name: 'Authorization',
             newValue: 'Bearer {{oauth2Token}}'
         }
+    ],
+    pathReplacements: [
+        {
+            part: 'items',
+            oldValueRegex: '^\\d+$',
+            newValue: '{{itemId}}'
+        }
     ]
 };
 
