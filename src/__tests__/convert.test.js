@@ -21,6 +21,7 @@ const folderFunctions = require('../folder-functions');
 
 const fixturesPath = path.join(__dirname, 'fixtures');
 const snippetsPath = path.join(__dirname, 'input-snippets');
+const nestedSnippetsPath = path.join(__dirname, 'nested-input-snippets');
 
 const exampleReplacements = {
     host: {
@@ -88,6 +89,26 @@ describe('Should convert Spring REST Docs cURL snippets to', () => {
         expect(actualOutput.resources).toEqual(expectedOutput.resources);
     });
 
+    it('an Insomnia collection with nested folders', () => {
+        const expectedOutput = loadFixture('insomnia-with-nested-folders.json');
+        const actualOutput = JSON.parse(converter.convert({
+            folderToScan: snippetsPath,
+            exportFormat: 'insomnia',
+            determineFolder: folderFunctions.nestedFolders
+        }));
+        expect(actualOutput.resources).toEqual(expectedOutput.resources);
+    });
+
+    it('an Insomnia collection with nested folders with matching names', () => {
+        const expectedOutput = loadFixture('insomnia-with-nested-matching-folders.json');
+        const actualOutput = JSON.parse(converter.convert({
+            folderToScan: nestedSnippetsPath,
+            exportFormat: 'insomnia',
+            determineFolder: folderFunctions.nestedFolders
+        }));
+        expect(actualOutput.resources).toEqual(expectedOutput.resources);
+    });
+
     it('a Postman collection with folders', () => {
         const expectedOutput = loadFixture('postman-with-folders.json');
         const actualOutput = JSON.parse(converter.convert({
@@ -141,6 +162,26 @@ describe('Should convert Spring REST Docs cURL snippets to', () => {
                     }
                 ]
             }
+        }));
+        expect(actualOutput).toEqual(expectedOutput);
+    });
+
+    it('a Postman collection with nested folders ', () => {
+        const expectedOutput = loadFixture('postman-with-nested-folders.json');
+        const actualOutput = JSON.parse(converter.convert({
+            folderToScan: snippetsPath,
+            exportFormat: 'postman',
+            determineFolder: folderFunctions.nestedFolders
+        }));
+        expect(actualOutput).toEqual(expectedOutput);
+    });
+
+    it('a Postman collection with nested matching folders ', () => {
+        const expectedOutput = loadFixture('postman-with-nested-matching-folders.json');
+        const actualOutput = JSON.parse(converter.convert({
+            folderToScan: nestedSnippetsPath,
+            exportFormat: 'postman',
+            determineFolder: folderFunctions.nestedFolders
         }));
         expect(actualOutput).toEqual(expectedOutput);
     });

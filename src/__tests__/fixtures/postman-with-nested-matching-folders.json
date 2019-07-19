@@ -1,0 +1,69 @@
+{
+  "info": {
+    "name": "REST Docs to Postman",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "item": [
+        {
+          "item": [
+            {
+              "item": [
+                {
+                  "name": "docs",
+                  "request": {
+                    "body": null,
+                    "header": [],
+                    "method": "GET",
+                    "url": {
+                      "host": [
+                        "http://localhost:8080"
+                      ],
+                      "path": [
+                        "",
+                        "docs"
+                      ],
+                      "raw": "http://localhost:8080/docs"
+                    }
+                  }
+                }
+              ],
+              "name": "matching-third-level"
+            }
+          ],
+          "name": "second-level-one"
+        },
+        {
+          "item": [
+            {
+              "item": [
+                {
+                  "name": "index",
+                  "request": {
+                    "body": null,
+                    "header": [],
+                    "method": "GET",
+                    "url": {
+                      "host": [
+                        "http://localhost:8080"
+                      ],
+                      "path": [
+                        "",
+                        ""
+                      ],
+                      "raw": "http://localhost:8080/"
+                    }
+                  }
+                }
+              ],
+              "name": "matching-third-level"
+            }
+          ],
+          "name": "second-level-two"
+        }
+      ],
+      "name": "top-level-folder"
+    }
+  ]
+}

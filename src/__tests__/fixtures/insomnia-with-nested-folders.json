@@ -1,0 +1,261 @@
+{
+  "__export_date": "2019-07-15T19:04:37.752Z",
+  "__export_format": 3,
+  "__export_source": "restdocs-to-postman:v2.0.4",
+  "_type": "export",
+  "resources": [
+    {
+      "_id": "__FOLDER_2__",
+      "_type": "request_group",
+      "metaSortKey": 0,
+      "name": "documentation-test",
+      "parentId": "__FOLDER_1__"
+    },
+    {
+      "_id": "__FOLDER_3__",
+      "_type": "request_group",
+      "metaSortKey": 1,
+      "name": "item-resource-test",
+      "parentId": "__FOLDER_1__"
+    },
+    {
+      "_id": "__FOLDER_1__",
+      "_type": "request_group",
+      "metaSortKey": 2,
+      "name": "top-level-folder",
+      "parentId": "__WORKSPACE_ID__"
+    },
+    {
+      "_id": "__REQ_1__",
+      "_type": "request",
+      "authentication": {},
+      "body": {},
+      "headers": [],
+      "method": "GET",
+      "name": "docs",
+      "parameters": [],
+      "parentId": "__FOLDER_2__",
+      "url": "http://localhost:8080/docs"
+    },
+    {
+      "_id": "__REQ_2__",
+      "_type": "request",
+      "authentication": {},
+      "body": {},
+      "headers": [],
+      "method": "GET",
+      "name": "index",
+      "parameters": [],
+      "parentId": "__FOLDER_2__",
+      "url": "http://localhost:8080/"
+    },
+    {
+      "_id": "__REQ_3__",
+      "_type": "request",
+      "authentication": {},
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\"description\":\"Hot News\"}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 8114cde8-26dd-4c61-b601-29f945b67d25"
+        }
+      ],
+      "method": "POST",
+      "name": "items",
+      "parameters": [],
+      "parentId": "__FOLDER_3__",
+      "url": "http://localhost:8080/items"
+    },
+    {
+      "_id": "__REQ_4__",
+      "_type": "request",
+      "authentication": {},
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \"name\": \"xyz\" }"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "method": "POST",
+      "name": "items/cloneItem",
+      "parameters": [],
+      "parentId": "__FOLDER_3__",
+      "url": "http://localhost:8080/items/cloneItem"
+    },
+    {
+      "_id": "__REQ_5__",
+      "_type": "request",
+      "authentication": {},
+      "body": {},
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer 8114cde8-26dd-4c61-b601-29f945b67d25"
+        }
+      ],
+      "method": "DELETE",
+      "name": "items/1",
+      "parameters": [],
+      "parentId": "__FOLDER_3__",
+      "url": "http://localhost:8080/items/1"
+    },
+    {
+      "_id": "__REQ_6__",
+      "_type": "request",
+      "authentication": {},
+      "body": {},
+      "headers": [],
+      "method": "GET",
+      "name": "items",
+      "parameters": [],
+      "parentId": "__FOLDER_3__",
+      "url": "http://localhost:8080/items"
+    },
+    {
+      "_id": "__REQ_7__",
+      "_type": "request",
+      "authentication": {},
+      "body": {},
+      "headers": [],
+      "method": "GET",
+      "name": "items/1/child-1",
+      "parameters": [],
+      "parentId": "__FOLDER_3__",
+      "url": "http://localhost:8080/items/1/child-1"
+    },
+    {
+      "_id": "__REQ_8__",
+      "_type": "request",
+      "authentication": {},
+      "body": {},
+      "headers": [],
+      "method": "GET",
+      "name": "items/1",
+      "parameters": [],
+      "parentId": "__FOLDER_3__",
+      "url": "http://localhost:8080/items/1"
+    },
+    {
+      "_id": "__REQ_9__",
+      "_type": "request",
+      "authentication": {},
+      "body": {
+        "mimeType": "multipart/form-data",
+        "params": [
+          {
+            "name": "command",
+            "type": "text",
+            "value": "increase"
+          },
+          {
+            "name": "value",
+            "type": "text",
+            "value": "2"
+          }
+        ]
+      },
+      "headers": [],
+      "method": "POST",
+      "name": "items/process",
+      "parameters": [],
+      "parentId": "__FOLDER_3__",
+      "url": "http://localhost:8080/items/process"
+    },
+    {
+      "_id": "__REQ_10__",
+      "_type": "request",
+      "authentication": {},
+      "body": {
+        "mimeType": "application/x-www-form-urlencoded",
+        "params": [
+          {
+            "name": "command",
+            "value": "increase"
+          },
+          {
+            "name": "value",
+            "value": "3"
+          }
+        ]
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/x-www-form-urlencoded"
+        }
+      ],
+      "method": "POST",
+      "name": "items/1/process",
+      "parameters": [],
+      "parentId": "__FOLDER_3__",
+      "url": "http://localhost:8080/items/1/process"
+    },
+    {
+      "_id": "__REQ_11__",
+      "_type": "request",
+      "authentication": {},
+      "body": {},
+      "headers": [],
+      "method": "GET",
+      "name": "items/search",
+      "parameters": [],
+      "parentId": "__FOLDER_3__",
+      "url": "http://localhost:8080/items/search?desc=main&hint=1"
+    },
+    {
+      "_id": "__REQ_12__",
+      "_type": "request",
+      "authentication": {},
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\"description\":\"Hot News\"}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 8114cde8-26dd-4c61-b601-29f945b67d25"
+        }
+      ],
+      "method": "PUT",
+      "name": "items/1",
+      "parameters": [],
+      "parentId": "__FOLDER_3__",
+      "url": "http://localhost:8080/items/1"
+    },
+    {
+      "_id": "__REQ_13__",
+      "_type": "request",
+      "authentication": {},
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \"type\": \"1\", \"tag\": \"myItem\" }"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "method": "POST",
+      "name": "items/validateMetadata",
+      "parameters": [],
+      "parentId": "__FOLDER_3__",
+      "url": "http://localhost:8080/items/validateMetadata"
+    }
+  ]
+}
