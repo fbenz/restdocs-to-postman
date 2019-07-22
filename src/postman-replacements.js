@@ -55,6 +55,21 @@ const replaceHost = (postmanCollection, hostReplacement) => {
     });
 };
 
+const replacePathVariables = (postmanCollection, pathReplacements) => {
+    postmanCollection.item.forEach(postmanItem => {
+        if (isRequest(postmanItem)) {
+            pathReplacements.forEach(pathReplacement => {
+                const postmanUrl = postmanItem.request.url;
+                postmanItem.name = utils.replacePathPartInUrl(postmanItem.name, pathReplacement);
+                postmanUrl.raw = utils.replacePathPartInUrl(postmanUrl.raw, pathReplacement);
+                postmanUrl.path =  utils.replacePathPartInPathArray(postmanUrl.path, pathReplacement);
+            });
+        } else if (isFolder(postmanItem)) {
+            replacePathVariables(postmanItem, pathReplacements);
+        }
+    });
+};
+
 module.exports.performPostmanReplacements = (postmanCollection, replacements) => {
     if (!replacements) {
         return;
@@ -64,5 +79,8 @@ module.exports.performPostmanReplacements = (postmanCollection, replacements) =>
     }
     if (replacements.host) {
         replaceHost(postmanCollection, replacements.host);
+    }
+    if (replacements.pathReplacements) {
+        replacePathVariables(postmanCollection, replacements.pathReplacements)
     }
 };

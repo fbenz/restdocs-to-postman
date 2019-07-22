@@ -88,8 +88,8 @@
     },
     {
       "parentId": "__FOLDER_2__",
-      "name": "items/1",
-      "url": "{{host}}/items/1",
+      "name": "items/{{itemId}}",
+      "url": "{{host}}/items/{{itemId}}",
       "body": {},
       "method": "DELETE",
       "parameters": [],
@@ -117,8 +117,8 @@
     },
     {
       "parentId": "__FOLDER_2__",
-      "name": "items/1/child-1",
-      "url": "{{host}}/items/1/child-1",
+      "name": "items/{{itemId}}/child-1",
+      "url": "{{host}}/items/{{itemId}}/child-1",
       "body": {},
       "method": "GET",
       "parameters": [],
@@ -129,8 +129,8 @@
     },
     {
       "parentId": "__FOLDER_2__",
-      "name": "items/1",
-      "url": "{{host}}/items/1",
+      "name": "items/{{itemId}}",
+      "url": "{{host}}/items/{{itemId}}",
       "body": {},
       "method": "GET",
       "parameters": [],
@@ -167,8 +167,8 @@
     },
     {
       "parentId": "__FOLDER_2__",
-      "name": "items/1/process",
-      "url": "{{host}}/items/1/process",
+      "name": "items/{{itemId}}/process",
+      "url": "{{host}}/items/{{itemId}}/process",
       "body": {
         "mimeType": "application/x-www-form-urlencoded",
         "params": [
@@ -208,8 +208,8 @@
     },
     {
       "parentId": "__FOLDER_2__",
-      "name": "items/1",
-      "url": "{{host}}/items/1",
+      "name": "items/{{itemId}}",
+      "url": "{{host}}/items/{{itemId}}",
       "body": {
         "mimeType": "application/json",
         "text": "{\"description\":\"Hot News\"}"

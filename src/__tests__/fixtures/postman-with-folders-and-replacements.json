@@ -106,7 +106,7 @@
           }
         },
         {
-          "name": "items/1",
+          "name": "items/{{itemId}}",
           "request": {
             "method": "DELETE",
             "header": [
@@ -117,14 +117,14 @@
             ],
             "body": null,
             "url": {
-              "raw": "{{host}}/items/1",
+              "raw": "{{host}}/items/{{itemId}}",
               "host": [
                 "{{host}}"
               ],
               "path": [
                 "",
                 "items",
-                "1"
+                "{{itemId}}"
               ]
             }
           }
@@ -148,40 +148,40 @@
           }
         },
         {
-          "name": "items/1/child-1",
+          "name": "items/{{itemId}}/child-1",
           "request": {
             "method": "GET",
             "header": [],
             "body": null,
             "url": {
-              "raw": "{{host}}/items/1/child-1",
+              "raw": "{{host}}/items/{{itemId}}/child-1",
               "host": [
                 "{{host}}"
               ],
               "path": [
                 "",
                 "items",
-                "1",
+                "{{itemId}}",
                 "child-1"
               ]
             }
           }
         },
         {
-          "name": "items/1",
+          "name": "items/{{itemId}}",
           "request": {
             "method": "GET",
             "header": [],
             "body": null,
             "url": {
-              "raw": "{{host}}/items/1",
+              "raw": "{{host}}/items/{{itemId}}",
               "host": [
                 "{{host}}"
               ],
               "path": [
                 "",
                 "items",
-                "1"
+                "{{itemId}}"
               ]
             }
           }
@@ -218,7 +218,7 @@
           }
         },
         {
-          "name": "items/1/process",
+          "name": "items/{{itemId}}/process",
           "request": {
             "method": "POST",
             "header": [
@@ -241,14 +241,14 @@
               ]
             },
             "url": {
-              "raw": "{{host}}/items/1/process",
+              "raw": "{{host}}/items/{{itemId}}/process",
               "host": [
                 "{{host}}"
               ],
               "path": [
                 "",
                 "items",
-                "1",
+                "{{itemId}}",
                 "process"
               ]
             }
@@ -284,7 +284,7 @@
           }
         },
         {
-          "name": "items/1",
+          "name": "items/{{itemId}}",
           "request": {
             "method": "PUT",
             "header": [
@@ -302,14 +302,14 @@
               "raw": "{\"description\":\"Hot News\"}"
             },
             "url": {
-              "raw": "{{host}}/items/1",
+              "raw": "{{host}}/items/{{itemId}}",
               "host": [
                 "{{host}}"
               ],
               "path": [
                 "",
                 "items",
-                "1"
+                "{{itemId}}"
               ]
             }
           }
