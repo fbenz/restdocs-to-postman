@@ -32,7 +32,7 @@ module.exports.go = function () {
         .option('-f, --determine-folder [function name]', 'optional function to structure requests into folders')
         .option('-t, --attachments [file]', 'optional JSON file with attachments')
         .option('-c, --collection-name [name]', 'title of the collection', 'REST Docs to Postman')
-        .option('-n --naming-convention [name]', 'convention to name requests by', 'shortPath')
+        .option('-n, --naming-convention [name]', 'convention to name requests by', 'shortPath')
         .parse(process.argv);
 
     let replacements, attachments;
