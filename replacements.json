@@ -1,0 +1,16 @@
+{
+    "pathReplacements": [
+        {
+            "oldValueRegex": "(?<=profiles\\/)[^\\/]*",
+            "newValue": "{{profile-id}}"
+        },
+        {
+            "oldValueRegex": "(?<=workspaces\\/)[^\\/]*",
+            "newValue": "{{workspace-id}}"
+        },
+        {
+            "oldValueRegex": "(?<=datasets\\/)[^\\/]*",
+            "newValue": "{{dataset-id}}"
+        }
+    ]
+}
