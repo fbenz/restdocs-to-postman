@@ -44,6 +44,17 @@ Host and header replacements can be used with `--replacements replacements.json`
 See [replacement-example.json](https://github.com/fbenz/restdocs-to-postman/blob/master/replacements-example.json)
 for an example of a replacement file.
 
+Short Flag | Long Flag | Description | Default value | Available options
+--- | --- | --- | --- | ---
+`-i` | `--input [folder]` | Folder to recursively scan for REST Docs curl-request.adoc/md files | `.`
+`-e` | `--export-format [format]` | Export format | `postman` | `postman`, `insomnia`
+`-o` | `--output [format]` | Ouput file | |
+`-r` | `--replacements [file]` | Optional JSON file with replacements | |
+`-f` | `--determine-folder [function name]` | Optional function to structure requests into folders | | `secondLastFolder`, `nestedFolder`
+`-t` | `--attachments [file]` | Optional JSON file with attachments | |
+`-c` | `--collection-name [name]` | Title of the collection | `'REST Docs to Postman'` |
+`-n` | `--naming-convention [name]` | Convention to name requests by | `shortPath` | `shortPath`, `dir`
+
 ## Programmatic Usage
 
 ```javascript
