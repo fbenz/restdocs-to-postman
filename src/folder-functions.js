@@ -18,7 +18,8 @@ const path = require('path');
 module.exports.secondLastFolder = (filePath, url, folderToScan) => {
     const parts = filePath.split(path.sep);
     if (parts.length >= 3) {
-        return parts[parts.length - 3];
+        var folderName = parts[parts.length - 3];
+        return folderName[0].toUpperCase() + folderName.substring(1);
     } else {
         return null;
     }
@@ -37,7 +38,7 @@ module.exports.nestedFolders = (filePath, url, folderToScan) => {
         const folderToScanParts = folderToScan.split(path.sep);
         const lastFolderIndex = parts.length - 3;
         var nestedFolderParts = [];
-        parts.forEach(function(part, index) {
+        parts.forEach(function (part, index) {
             if (part === folderToScanParts[folderToScanParts.length - 1]) {
                 nestedFolderParts = parts.splice(index + 1, (lastFolderIndex - index));
             }
