@@ -55,7 +55,7 @@ const shortenName = (insomniaItem) => {
  * @return {?string}
  */
 module.exports.convert = (options) => {
-    let {folderToScan, exportFormat, replacements, attachments, determineFolder} = options;
+    let { folderToScan, exportFormat, replacements, attachments, determineFolder, collectionName } = options;
     const results = utils.traverseFilesSync(folderToScan);
     if (!results) {
         return null;
@@ -83,7 +83,7 @@ module.exports.convert = (options) => {
         insomniaReplacements.performInsomniaReplacements(insomniaCollection, replacements);
         return JSON.stringify(insomniaCollection);
     } else if (exportFormat === 'postman') {
-        const postmanCollection = insomniaToPostman.toPostmanCollection(insomniaCollection);
+        const postmanCollection = insomniaToPostman.toPostmanCollection(insomniaCollection, collectionName);
         postmanReplacements.performPostmanReplacements(postmanCollection, replacements);
         postmanAttachments.performPostmanAttachments(postmanCollection, attachments);
         return JSON.stringify(postmanCollection);

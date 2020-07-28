@@ -148,7 +148,7 @@ const sortFolders = (folders) => {
     return folders;
 }
 
-module.exports.toPostmanCollection = (insomniaCollection) => {
+module.exports.toPostmanCollection = (insomniaCollection, collectionName) => {
 
     //First sort all resources by folder id, so that the logic below to create the folders will be guaranteed to create
     //parent level folders before child folders.
@@ -176,7 +176,7 @@ module.exports.toPostmanCollection = (insomniaCollection) => {
         });
     return {
         info: {
-            name: 'REST Docs to Postman',
+            name: collectionName,
             schema: 'https://schema.getpostman.com/json/collection/v2.1.0/collection.json'
         },
         item: topLevelItems

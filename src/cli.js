@@ -31,6 +31,7 @@ module.exports.go = function () {
         .option('-r, --replacements [file]', 'optional JSON file with replacements')
         .option('-f, --determine-folder [function name]', 'optional function to structure requests into folders')
         .option('-t, --attachments [file]', 'optional JSON file with attachments')
+        .option('-c, --collection-name [name]', 'title of the collection', 'REST Docs to Postman')
         .parse(process.argv);
 
     let replacements, attachments;
@@ -47,7 +48,8 @@ module.exports.go = function () {
         exportFormat: program.exportFormat,
         replacements: replacements,
         attachments: attachments,
-        determineFolder: folderFunctions.nameToFunction(program.determineFolder)
+        determineFolder: folderFunctions.nameToFunction(program.determineFolder),
+        collectionName: program.collectionName
     });
     // Output/write result
     if (program.output) {
