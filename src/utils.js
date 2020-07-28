@@ -42,12 +42,27 @@ const replacePathPartInUrl = (url, pathReplacement) => {
 };
 
 const replacePathPartInPathArray = (urlParts, pathReplacement) => {
+    var url = urlParts.join("/");
     const oldValueRegex = new RegExp(pathReplacement.oldValueRegex);
-    var indexOfPart = urlParts.indexOf(pathReplacement.part);
-    if (indexOfPart != -1 && indexOfPart != urlParts.length - 1 && oldValueRegex.test(urlParts[indexOfPart + 1])) {
-        urlParts.splice(
-            urlParts.indexOf(pathReplacement.part) + 1,
-            1, pathReplacement.newValue);
+    if (pathReplacement.part == null) {
+        const matches = url.match(oldValueRegex);
+
+        if (matches != null) {
+            matches.forEach(match => {
+                if (urlParts.indexOf(match) != -1) {
+                    urlParts[urlParts.indexOf(match)] = pathReplacement.newValue;
+                }
+            });
+        }
+    }
+
+    else {
+        var indexOfPart = urlParts.indexOf(pathReplacement.part);
+        if (indexOfPart != -1 && indexOfPart != urlParts.length - 1 && oldValueRegex.test(urlParts[indexOfPart + 1])) {
+            urlParts.splice(
+                urlParts.indexOf(pathReplacement.part) + 1,
+                1, pathReplacement.newValue);
+        }
     }
 
     return urlParts;

@@ -55,22 +55,24 @@ const replaceHost = (postmanCollection, hostReplacement) => {
     });
 };
 
-const replacePathVariables = (postmanCollection, pathReplacements) => {
+const replacePathVariables = (postmanCollection, pathReplacements, namingConvention) => {
     postmanCollection.item.forEach(postmanItem => {
         if (isRequest(postmanItem)) {
             pathReplacements.forEach(pathReplacement => {
                 const postmanUrl = postmanItem.request.url;
-                postmanItem.name = utils.replacePathPartInUrl(postmanItem.name, pathReplacement);
+                if (namingConvention !== 'dir') {
+                    postmanItem.name = utils.replacePathPartInUrl(postmanItem.name, pathReplacement);
+                }
                 postmanUrl.raw = utils.replacePathPartInUrl(postmanUrl.raw, pathReplacement);
-                postmanUrl.path =  utils.replacePathPartInPathArray(postmanUrl.path, pathReplacement);
+                postmanUrl.path = utils.replacePathPartInPathArray(postmanUrl.path, pathReplacement);
             });
         } else if (isFolder(postmanItem)) {
-            replacePathVariables(postmanItem, pathReplacements);
+            replacePathVariables(postmanItem, pathReplacements, namingConvention);
         }
     });
 };
 
-module.exports.performPostmanReplacements = (postmanCollection, replacements) => {
+module.exports.performPostmanReplacements = (postmanCollection, replacements, namingConvention) => {
     if (!replacements) {
         return;
     }
@@ -81,6 +83,6 @@ module.exports.performPostmanReplacements = (postmanCollection, replacements) =>
         replaceHost(postmanCollection, replacements.host);
     }
     if (replacements.pathReplacements) {
-        replacePathVariables(postmanCollection, replacements.pathReplacements)
+        replacePathVariables(postmanCollection, replacements.pathReplacements, namingConvention)
     }
 };

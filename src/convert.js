@@ -88,7 +88,7 @@ module.exports.convert = (options) => {
         return JSON.stringify(insomniaCollection);
     } else if (exportFormat === 'postman') {
         const postmanCollection = insomniaToPostman.toPostmanCollection(insomniaCollection, collectionName);
-        postmanReplacements.performPostmanReplacements(postmanCollection, replacements);
+        postmanReplacements.performPostmanReplacements(postmanCollection, replacements, namingConvention);
         postmanAttachments.performPostmanAttachments(postmanCollection, attachments);
         return JSON.stringify(postmanCollection);
     } else {
