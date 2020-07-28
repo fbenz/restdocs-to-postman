@@ -55,7 +55,7 @@ const shortenName = (insomniaItem) => {
  * @return {?string}
  */
 module.exports.convert = (options) => {
-    let { folderToScan, exportFormat, replacements, attachments, determineFolder, collectionName } = options;
+    let { folderToScan, exportFormat, replacements, attachments, determineFolder, collectionName, namingConvention } = options;
     const results = utils.traverseFilesSync(folderToScan);
     if (!results) {
         return null;
@@ -72,12 +72,16 @@ module.exports.convert = (options) => {
             }
         }
     });
-    const insomniaCollection = curlToInsomnia.toInsomniaCollection(determineFolder, allCurls, folderToScan);
-    insomniaCollection.resources.forEach(i => {
-        if (i._type === 'request') {
-            shortenName(i);
-        }
-    });
+    const insomniaCollection = curlToInsomnia.toInsomniaCollection(determineFolder, allCurls, folderToScan, namingConvention);
+    if (namingConvention === 'shortPath') {
+        insomniaCollection.resources.forEach(i => {
+            if (i._type === 'request') {
+                shortenName(i);
+            }
+        });
+    } else if (namingConvention !== 'dir') {
+        throw new Error('Unknown naming convention: ' + namingConvention);
+    }
 
     if (exportFormat === 'insomnia') {
         insomniaReplacements.performInsomniaReplacements(insomniaCollection, replacements);

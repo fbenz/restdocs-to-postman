@@ -19,7 +19,9 @@
  */
 'use strict';
 const importers = require('insomnia-importers');
-const {version} = require('../package.json');
+const { version } = require('../package.json');
+
+const path = require('path');
 
 const TOP_LEVEL = "topLevel";
 
@@ -80,7 +82,7 @@ const createNestedFolders = (nestedFolderPath, folderNameToId, folderResources, 
     var currentParentFolderName = TOP_LEVEL;
 
     const subFolders = nestedFolderPath.split("/");
-    subFolders.forEach(function(subFolder) {
+    subFolders.forEach(function (subFolder) {
         folderCount = createFolder(subFolder, folderNameToId, folderResources, resourceWrapper, currentParentFolderName, folderCount);
 
         currentParentFolderName += subFolder;
@@ -133,7 +135,7 @@ const createFolder = (folderName, folderNameToId, folderResources, resourceWrapp
  * @param {function(path: string, url: string): ?string} determineFolder
  * @param {Array<{path: string, curl: string}>} curlCommands
  */
-module.exports.toInsomniaCollection = (determineFolder, curlCommands, folderToScan) => {
+module.exports.toInsomniaCollection = (determineFolder, curlCommands, folderToScan, namingConvention) => {
     const resourceWrappers = curlCommands.map(c => {
         return {
             path: c.path,
@@ -145,6 +147,13 @@ module.exports.toInsomniaCollection = (determineFolder, curlCommands, folderToSc
 
     const requestResources = resourceWrappers.map((resourceWrapper, index) => {
         resourceWrapper.resource._id = `__REQ_${index + 1}__`;
+
+        if (namingConvention === 'dir') {
+            var dirName = path.basename(path.dirname(resourceWrapper.path));
+            dirName = dirName.replace(/-/g, " ");
+            resourceWrapper.resource.name = dirName[0].toUpperCase() + dirName.substring(1);
+        }
+
         return resourceWrapper.resource;
     });
 
