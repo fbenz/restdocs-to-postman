@@ -86,14 +86,23 @@ module.exports.convert = (options) => {
         }
     });
     const insomniaCollection = curlToInsomnia.toInsomniaCollection(determineFolder, allCurls, folderToScan, namingConvention);
-    if (namingConvention === 'shortPath') {
-        insomniaCollection.resources.forEach(i => {
-            if (i._type === 'request') {
-                shortenName(i);
-            }
-        });
-    } else if (namingConvention !== 'dir') {
-        throw new Error('Unknown naming convention: ' + namingConvention);
+
+    if (namingConvention) {
+        switch (namingConvention) {
+            case 'shortPath':
+                insomniaCollection.resources.forEach(i => {
+                    if (i._type === 'request') {
+                        shortenName(i);
+                    }
+                });
+                break;
+
+            case 'dir':
+                break;
+
+            default:
+                throw new Error('Unknown naming convention: ' + beautify);
+        }
     }
 
     if (beautify) {
@@ -135,15 +144,26 @@ module.exports.convert = (options) => {
         }
     }
 
-    if (exportFormat === 'insomnia') {
-        insomniaReplacements.performInsomniaReplacements(insomniaCollection, replacements);
-        return JSON.stringify(insomniaCollection);
-    } else if (exportFormat === 'postman') {
-        const postmanCollection = insomniaToPostman.toPostmanCollection(insomniaCollection, collectionName);
-        postmanReplacements.performPostmanReplacements(postmanCollection, replacements, namingConvention);
-        postmanAttachments.performPostmanAttachments(postmanCollection, attachments);
-        return JSON.stringify(postmanCollection);
-    } else {
-        throw new Error('Unknown export format: ' + exportFormat);
+    if (exportFormat) {
+        var collection = null;
+
+        switch (exportFormat) {
+            case 'insomnia':
+                insomniaReplacements.performInsomniaReplacements(insomniaCollection, replacements);
+                collection = insomniaCollection;
+                break;
+
+            case 'postman':
+                const postmanCollection = insomniaToPostman.toPostmanCollection(insomniaCollection, collectionName);
+                postmanReplacements.performPostmanReplacements(postmanCollection, replacements, namingConvention);
+                postmanAttachments.performPostmanAttachments(postmanCollection, attachments);
+                collection = postmanCollection;
+                break;
+
+            default:
+                throw new Error('Unknown export format: ' + exportFormat);
+        }
+
+        return JSON.stringify(collection);
     }
 };
