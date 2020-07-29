@@ -145,6 +145,8 @@ module.exports.convert = (options) => {
     }
 
     if (exportFormat) {
+        console.log(`Converting ${allCurls.length} cURL commands to \'${exportFormat}\' collection format...`);
+
         var collection = null;
 
         switch (exportFormat) {

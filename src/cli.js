@@ -60,8 +60,9 @@ module.exports.go = function () {
         const fullOutputPath = path.resolve(program.output);
         if (fullOutputPath) {
             fs.writeFileSync(fullOutputPath, result);
+            console.log(`Conversion completed successfully`);
         } else {
-            console.log('No cURL commands were found.');
+            console.log('Conversion not completed: no cURL commands were found');
         }
     } else {
         console.log(result);
