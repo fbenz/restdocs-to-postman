@@ -11,6 +11,14 @@
         {
             "oldValueRegex": "(?<=datasets\\/)[^\\/]*",
             "newValue": "{{dataset-id}}"
+        },
+        {
+            "oldValueRegex": "(?<=members\\/)[^\\/]*",
+            "newValue": "{{member-id}}"
+        },
+        {
+            "oldValueRegex": "(?<=invitations\\/)[^\\/]*",
+            "newValue": "{{invitation-id}}"
         }
     ]
 }
