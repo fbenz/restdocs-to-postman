@@ -19,7 +19,7 @@ module.exports.secondLastFolder = (filePath, url, folderToScan) => {
     const parts = filePath.split(path.sep);
     if (parts.length >= 3) {
         var folderName = parts[parts.length - 3];
-        return folderName[0].toUpperCase() + folderName.substring(1);
+        return folderName;
     } else {
         return null;
     }

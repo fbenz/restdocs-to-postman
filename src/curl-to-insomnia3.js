@@ -149,9 +149,7 @@ module.exports.toInsomniaCollection = (determineFolder, curlCommands, folderToSc
         resourceWrapper.resource._id = `__REQ_${index + 1}__`;
 
         if (namingConvention === 'dir') {
-            var dirName = path.basename(path.dirname(resourceWrapper.path));
-            dirName = dirName.replace(/-/g, " ");
-            resourceWrapper.resource.name = dirName[0].toUpperCase() + dirName.substring(1);
+            resourceWrapper.resource.name = path.basename(path.dirname(resourceWrapper.path));
         }
 
         return resourceWrapper.resource;

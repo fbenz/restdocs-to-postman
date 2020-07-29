@@ -33,6 +33,7 @@ module.exports.go = function () {
         .option('-t, --attachments [file]', 'optional JSON file with attachments')
         .option('-c, --collection-name [name]', 'title of the collection', 'REST Docs to Postman')
         .option('-n, --naming-convention [name]', 'convention to name requests by', 'shortPath')
+        .option('-b, --beautify [target]', 'beautifies names of folders and requests where applicable')
         .parse(process.argv);
 
     let replacements, attachments;
@@ -51,7 +52,8 @@ module.exports.go = function () {
         attachments: attachments,
         determineFolder: folderFunctions.nameToFunction(program.determineFolder),
         collectionName: program.collectionName,
-        namingConvention: program.namingConvention
+        namingConvention: program.namingConvention,
+        beautify: program.beautify
     });
     // Output/write result
     if (program.output) {

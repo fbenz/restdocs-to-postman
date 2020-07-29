@@ -49,13 +49,26 @@ const shortenName = (insomniaItem) => {
     }
 };
 
+const beautifyName = (insomniaItem) => {
+    var newName = insomniaItem.name;
+    var badChars = newName.match(/[^a-zA-Z0-9\s]/g);
+
+    while (badChars && badChars.length > 0) {
+        newName = newName.replace(badChars[0], " ");
+        badChars.shift();
+    }
+
+    newName = newName[0].toUpperCase() + newName.substring(1);
+    insomniaItem.name = newName;
+}
+
 /**
  *
  * @param {{folderToScan: string, exportFormat: string, replacements: ?Object, determineFolder: ?function}} options
  * @return {?string}
  */
 module.exports.convert = (options) => {
-    let { folderToScan, exportFormat, replacements, attachments, determineFolder, collectionName, namingConvention } = options;
+    let { folderToScan, exportFormat, replacements, attachments, determineFolder, collectionName, namingConvention, beautify } = options;
     const results = utils.traverseFilesSync(folderToScan);
     if (!results) {
         return null;
@@ -81,6 +94,45 @@ module.exports.convert = (options) => {
         });
     } else if (namingConvention !== 'dir') {
         throw new Error('Unknown naming convention: ' + namingConvention);
+    }
+
+    if (beautify) {
+        var type = null;
+
+        switch (beautify) {
+            case 'requests':
+                if (namingConvention === 'shortPath') console.log(`The beautify option \'${beautify}\' is incompatible with the naming convention \'${namingConvention}\'`);
+                type = 'request';
+                break;
+
+            case 'folders':
+                if (!determineFolder) console.log('Folders cannot be beautified as the determineFolder option was not specified');
+                type = 'request_group';
+                break;
+
+            case 'all':
+                if (namingConvention === 'shortPath') console.log(`The beautify option \'${beautify}\' is only compatible with the naming convention \'${namingConvention}\' for \'folders\'`);
+                if (!determineFolder) console.log('Only requests can be beautified as the determineFolder option was not specified');
+                type = 'all';
+                break;
+
+            default:
+                if (beautify === true) {
+                    throw new Error('No beautify target specified');
+                } else {
+                    throw new Error('Unknown beautify target: ' + beautify);
+                }
+        }
+
+        if (namingConvention === 'dir') {
+            if (type) {
+                insomniaCollection.resources.forEach(i => {
+                    if (i._type === type || type === 'all') {
+                        beautifyName(i);
+                    }
+                });
+            }
+        }
     }
 
     if (exportFormat === 'insomnia') {
