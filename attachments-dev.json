@@ -1,0 +1,71 @@
+{
+    "variable": [
+        {
+            "key": "profile-id",
+            "type": "string"
+        },
+        {
+            "key": "workspace-id",
+            "type": "string"
+        },
+        {
+            "key": "invitation-id",
+            "type": "string"
+        },
+        {
+            "key": "member-id",
+            "type": "string"
+        },
+        {
+            "key": "dataset-id",
+            "type": "string"
+        }
+    ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    "if (!pm.collectionVariables.get(\"profile-id\")) {",
+                    "    console.log(\"Collection variable 'profile-id' not set - setting user profile...\");",
+                    "    pm.sendRequest(\"http://catalog-staging.matatika.com/api/profiles\",",
+                    "        function (err, res) {",
+                    "            if (err) {",
+                    "                console.log(err);",
+                    "            } else {",
+                    "                const body = res.json();",
+                    "                if (body._embedded != null) {",
+                    "                    const profile_id = res.json()._embedded.profiles[0].id;",
+                    "                    pm.collectionVariables.set(\"profile-id\", encodeURI(profile_id));",
+                    "                } else {",
+                    "                    console.log(\"Profile not found - please create a profile\");",
+                    "                }",
+                    "            }",
+                    "        }",
+                    "    );",
+                    "}",
+                    "",
+                    "if (!pm.collectionVariables.get(\"workspace-id\")) {",
+                    "    console.log(\"Collection variable 'workspace-id' not set - setting first available workspace...\");",
+                    "    pm.sendRequest(\"http://catalog-staging.matatika.com/api/workspaces\",",
+                    "        function (err, res) {",
+                    "            if (err) {",
+                    "                console.log(err);",
+                    "            } else {",
+                    "                const body = res.json();",
+                    "                if (body._embedded != null) {",
+                    "                    const workspace_id = res.json()._embedded.workspaces[0].id;",
+                    "                    pm.collectionVariables.set(\"workspace-id\", encodeURI(workspace_id));",
+                    "                } else {",
+                    "                    console.log(\"No workspaces found - please create a workspace\");",
+                    "                }",
+                    "            }",
+                    "        }",
+                    "    );",
+                    "}"
+                ]
+            }
+        }
+    ]
+}
