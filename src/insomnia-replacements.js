@@ -58,6 +58,9 @@ module.exports.performInsomniaReplacements = (insomniaCollection, replacements) 
     if (!replacements) {
         return;
     }
+
+    console.log('Processing replacements...');
+
     if (replacements.headers) {
         replaceHeaders(insomniaCollection, replacements.headers);
     }

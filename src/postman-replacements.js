@@ -76,6 +76,9 @@ module.exports.performPostmanReplacements = (postmanCollection, replacements, na
     if (!replacements) {
         return;
     }
+
+    console.log('Processing replacements...');
+
     if (replacements.headers) {
         replaceHeaders(postmanCollection, replacements.headers);
     }

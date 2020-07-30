@@ -20,6 +20,9 @@ module.exports.performPostmanAttachments = (postmanCollection, attachments) => {
     if (!attachments) {
         return;
     }
+
+    console.log('Inserting attachments...');
+
     for(let key in attachments) {
         if(attachments.hasOwnProperty(key)){
             postmanCollection[key] = attachments[key];
