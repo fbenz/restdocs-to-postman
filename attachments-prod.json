@@ -1,6 +1,10 @@
 {
     "variable": [
         {
+            "key": "BEARER_TOKEN",
+            "type": "string"
+        },
+        {
             "key": "profile-id",
             "type": "string"
         },
@@ -21,49 +25,75 @@
             "type": "string"
         }
     ],
+    "auth": {
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "token",
+                "value": "{{BEARER_TOKEN}}",
+                "type": "string"
+            }
+        ]
+    },
     "event": [
         {
             "listen": "prerequest",
             "script": {
                 "type": "text/javascript",
                 "exec": [
-                    "if (!pm.collectionVariables.get(\"profile-id\")) {",
-                    "    console.log(\"Collection variable 'profile-id' not set - setting user profile...\");",
-                    "    pm.sendRequest(\"http://catalog.matatika.com/api/profiles\",",
-                    "        function (err, res) {",
-                    "            if (err) {",
-                    "                console.log(err);",
-                    "            } else {",
-                    "                const body = res.json();",
-                    "                if (body._embedded != null) {",
-                    "                    const profile_id = res.json()._embedded.profiles[0].id;",
-                    "                    pm.collectionVariables.set(\"profile-id\", encodeURI(profile_id));",
-                    "                } else {",
-                    "                    console.log(\"Profile not found - please create a profile\");",
-                    "                }",
-                    "            }",
-                    "        }",
-                    "    );",
+                    "class VariableMap extends Map {",
+                    "    constructor(name, item_relation, collection_relation, path) {",
+                    "        super();",
+                    "        this.set('name', name);",
+                    "        this.set('item_relation', item_relation);",
+                    "        this.set('collection_relation', collection_relation);",
+                    "        this.set('path', path);",
+                    "    }",
                     "}",
                     "",
-                    "if (!pm.collectionVariables.get(\"workspace-id\")) {",
-                    "    console.log(\"Collection variable 'workspace-id' not set - setting first available workspace...\");",
-                    "    pm.sendRequest(\"http://catalog.matatika.com/api/workspaces\",",
-                    "        function (err, res) {",
-                    "            if (err) {",
-                    "                console.log(err);",
-                    "            } else {",
-                    "                const body = res.json();",
-                    "                if (body._embedded != null) {",
-                    "                    const workspace_id = res.json()._embedded.workspaces[0].id;",
-                    "                    pm.collectionVariables.set(\"workspace-id\", encodeURI(workspace_id));",
-                    "                } else {",
-                    "                    console.log(\"No workspaces found - please create a workspace\");",
-                    "                }",
+                    "const variables = [",
+                    "    new VariableMap('profile-id', 'profile', 'profiles', 'https://catalog.matatika.com/api/profiles'),",
+                    "    new VariableMap('workspace-id', 'workspace', 'workspaces', 'https://catalog.matatika.com/api/workspaces'),",
+                    "    new VariableMap('member-id', 'member', 'members', null),",
+                    "    new VariableMap('invitation-id', 'invitation', 'invitations', null),",
+                    "    new VariableMap('dataset-id', 'dataset', 'datasets', null)",
+                    "]",
+                    "",
+                    "variables.forEach(function(variable) {",
+                    "    const name = variable.get('name');",
+                    "    const item_relation = variable.get('item_relation');",
+                    "    const collection_relation = variable.get('collection_relation');",
+                    "    const path = variable.get('path');",
+                    "",
+                    "    if (!pm.collectionVariables.get(name) && path != null) {",
+                    "        console.log(`Collection variable '${name}' not set - getting value...`);",
+                    "        const get_id = {",
+                    "            url: path,",
+                    "            method: 'GET',",
+                    "            header: {",
+                    "                'Authorization': 'Bearer ' + pm.collectionVariables.get('BEARER_TOKEN')",
                     "            }",
                     "        }",
-                    "    );",
-                    "}"
+                    "",
+                    "        if (path != null) {",
+                    "            pm.sendRequest(get_id, function (err, res) {",
+                    "                if (err) {",
+                    "                    console.log(err);",
+                    "                } else {",
+                    "                    pm.expect(res.code).to.equal(200);",
+                    "                    const body = res.json();",
+                    "                    if (body['_embedded'][collection_relation] != null) {",
+                    "                        const id = body['_embedded'][collection_relation][0]['id'];",
+                    "                        pm.collectionVariables.set(name, encodeURI(id));",
+                    "                        console.log(`Collection variable '${name}' successfully set with value '${encodeURI(id)}'`)",
+                    "                    } else {",
+                    "                        console.log(`Resource not found - please create a new ${item_relation}`);",
+                    "                    }",
+                    "                }",
+                    "            });",
+                    "        }",
+                    "    }",
+                    "});"
                 ]
             }
         }
