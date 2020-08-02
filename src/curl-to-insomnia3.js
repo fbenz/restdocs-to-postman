@@ -133,10 +133,10 @@ const createFolder = (folderName, folderNameToId, folderResources, resourceWrapp
 
 /**
  * @param {function(path: string, url: string): ?string} determineFolder
- * @param {Array<{path: string, curl: string}>} curlCommands
+ * @param {Array<{path: string, curl: string}>} allCurls
  */
-module.exports.toInsomniaCollection = (determineFolder, curlCommands, folderToScan, namingConvention) => {
-    const resourceWrappers = curlCommands.map(c => {
+module.exports.toInsomniaCollection = (determineFolder, allCurls, descriptions, allDescriptions, folderToScan, namingConvention) => {
+    const resourceWrappers = allCurls.map(c => {
         return {
             path: c.path,
             resource: importers.convert(c.curl).data.resources[0]
@@ -147,6 +147,10 @@ module.exports.toInsomniaCollection = (determineFolder, curlCommands, folderToSc
 
     const requestResources = resourceWrappers.map((resourceWrapper, index) => {
         resourceWrapper.resource._id = `__REQ_${index + 1}__`;
+
+        if (descriptions) {
+            resourceWrapper.resource.description = allDescriptions[index];
+        }
 
         if (namingConvention === 'dir') {
             resourceWrapper.resource.name = path.basename(path.dirname(resourceWrapper.path));

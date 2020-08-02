@@ -68,12 +68,13 @@ const beautifyName = (insomniaItem) => {
  * @return {?string}
  */
 module.exports.convert = (options) => {
-    let { folderToScan, exportFormat, replacements, attachments, determineFolder, collectionName, namingConvention, beautify } = options;
+    let { folderToScan, exportFormat, determineFolder, descriptions, namingConvention, beautifyNames, collectionName, replacements, attachments } = options;
     const results = utils.traverseFilesSync(folderToScan);
     if (!results) {
         return null;
     }
     let allCurls = [];
+    let allDescriptions = [];
     results.forEach(filePath => {
         if (filePath.endsWith('curl-request.adoc') || filePath.endsWith('curl-request.md')) {
             const extractedCurl = curlFromRestDocsFile(filePath);
@@ -83,9 +84,22 @@ module.exports.convert = (options) => {
                     curl: extractedCurl
                 });
             }
+        } else if (filePath.endsWith('description.adoc') || filePath.endsWith('description.md')) {
+            const extractedDescription = fs.readFileSync(filePath, 'utf8');
+            if (extractedDescription !== null) {
+                allDescriptions.push(extractedDescription);
+            }
         }
     });
-    const insomniaCollection = curlToInsomnia.toInsomniaCollection(determineFolder, allCurls, folderToScan, namingConvention);
+
+    console.log(`Found ${allCurls.length} cURL snippets`);
+
+    if (descriptions) {
+        console.log(`Found ${allDescriptions.length} description snippets`);
+        if (allDescriptions.length != allCurls.length) throw new Error("Number of cURL and description snippets mismatched. Check both snippet types exist within their respective directories.");
+    }
+
+    const insomniaCollection = curlToInsomnia.toInsomniaCollection(determineFolder, allCurls, descriptions, allDescriptions, folderToScan, namingConvention);
 
     if (namingConvention) {
         switch (namingConvention) {
@@ -105,10 +119,10 @@ module.exports.convert = (options) => {
         }
     }
 
-    if (beautify) {
+    if (beautifyNames) {
         var type = null;
 
-        switch (beautify) {
+        switch (beautifyNames) {
             case 'requests':
                 if (namingConvention === 'shortPath') console.log(`The beautify option \'${beautify}\' is incompatible with the naming convention \'${namingConvention}\'`);
                 type = 'request';

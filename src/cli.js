@@ -28,12 +28,14 @@ module.exports.go = function () {
         .option('-i, --input [folder]', 'folder to recursively scan for REST Docs curl-request.adoc/md files', '.')
         .option('-e, --export-format [format]', 'export format', 'postman')
         .option('-o, --output [file]', 'output file')
-        .option('-r, --replacements [file]', 'optional JSON file with replacements')
         .option('-f, --determine-folder [function name]', 'optional function to structure requests into folders')
-        .option('-t, --attachments [file]', 'optional JSON file with attachments')
-        .option('-c, --collection-name [name]', 'title of the collection', 'REST Docs to Postman')
+        .option('-d, --descriptions', 'scan for REST Docs description.adoc/md files')
         .option('-n, --naming-convention [name]', 'convention to name requests by', 'shortPath')
-        .option('-b, --beautify [target]', 'beautifies names of folders and requests where applicable')
+        .option('-b, --beautify-names [target]', 'beautifies names of folders and requests where applicable')
+        .option('-c, --collection-name [name]', 'title of the collection', 'REST Docs to Postman')
+        .option('-r, --replacements [file]', 'optional JSON file with replacements')
+        .option('-a, --attachments [file]', 'optional JSON file with attachments')
+
         .parse(process.argv);
 
     let replacements, attachments;
@@ -48,12 +50,13 @@ module.exports.go = function () {
     const result = converter.convert({
         folderToScan: program.input,
         exportFormat: program.exportFormat,
-        replacements: replacements,
-        attachments: attachments,
         determineFolder: folderFunctions.nameToFunction(program.determineFolder),
-        collectionName: program.collectionName,
+        descriptions: program.descriptions,
         namingConvention: program.namingConvention,
-        beautify: program.beautify
+        beautifyNames: program.beautifyNames,
+        collectionName: program.collectionName,
+        replacements: replacements,
+        attachments: attachments
     });
     // Output/write result
     if (program.output) {
