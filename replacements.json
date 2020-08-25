@@ -19,6 +19,14 @@
         {
             "oldValueRegex": "(?<=invitations\\/)[^\\/]*",
             "newValue": "{{invitation-id}}"
+        },
+        {
+            "oldValueRegex": "(?<=channels\\/)[^\\/]*",
+            "newValue": "{{channel-id}}"
+        },
+        {
+            "oldValueRegex": "(?<=comments\\/)[^\\/]*",
+            "newValue": "{{comment-id}}"
         }
     ]
 }
