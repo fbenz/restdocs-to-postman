@@ -23,6 +23,14 @@
         {
             "key": "dataset-id",
             "type": "string"
+        },
+        {
+            "key": "channel-id",
+            "type": "string"
+        },
+        {
+            "key": "comment-id",
+            "type": "string"
         }
     ],
     "auth": {
