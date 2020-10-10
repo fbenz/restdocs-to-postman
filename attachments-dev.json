@@ -31,6 +31,10 @@
         {
             "key": "comment-id",
             "type": "string"
+        },
+        {
+            "key": "parent-comment-id",
+            "type": "string"
         }
     ],
     "auth": {
