@@ -65,6 +65,10 @@ const replacePathVariables = (postmanCollection, pathReplacements, namingConvent
                 }
                 postmanUrl.raw = utils.replacePathPartInUrl(postmanUrl.raw, pathReplacement);
                 postmanUrl.path = utils.replacePathPartInPathArray(postmanUrl.path, pathReplacement);
+
+                if (postmanUrl.query) {
+                    postmanUrl.query = utils.replacePathPartInQuery(postmanUrl.query, pathReplacement);
+                }
             });
         } else if (isFolder(postmanItem)) {
             replacePathVariables(postmanItem, pathReplacements, namingConvention);
