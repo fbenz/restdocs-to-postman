@@ -76,18 +76,25 @@ module.exports.convert = (options) => {
     let allCurls = [];
     let allDescriptions = [];
     results.forEach(filePath => {
+        let fileDir = /.*(?=\/.*$)/.exec(filePath)[0];
+
         if (filePath.endsWith('curl-request.adoc') || filePath.endsWith('curl-request.md')) {
             const extractedCurl = curlFromRestDocsFile(filePath);
             if (extractedCurl !== null) {
                 allCurls.push({
                     path: filePath,
+                    dir: fileDir,
                     curl: extractedCurl
                 });
             }
         } else if (filePath.endsWith('description.adoc') || filePath.endsWith('description.md')) {
             const extractedDescription = fs.readFileSync(filePath, 'utf8');
             if (extractedDescription !== null) {
-                allDescriptions.push(extractedDescription);
+                allDescriptions.push({
+                    path: filePath,
+                    dir: fileDir,
+                    description: extractedDescription
+                });
             }
         }
     });
@@ -96,7 +103,6 @@ module.exports.convert = (options) => {
 
     if (descriptions) {
         console.log(`Found ${allDescriptions.length} description snippets`);
-        if (allDescriptions.length != allCurls.length) throw new Error("Number of cURL and description snippets mismatched. Check both snippet types exist within their respective directories.");
     }
 
     const insomniaCollection = curlToInsomnia.toInsomniaCollection(determineFolder, allCurls, descriptions, allDescriptions, folderToScan, namingConvention);
