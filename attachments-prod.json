@@ -35,6 +35,10 @@
         {
             "key": "parent-comment-id",
             "type": "string"
+        },
+        {
+            "key": "datasource-id",
+            "type": "string"
         }
     ],
     "auth": {

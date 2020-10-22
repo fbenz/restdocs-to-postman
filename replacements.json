@@ -31,6 +31,10 @@
         {
             "oldValueRegex": "(?<=parentId\\=)[a-z0-9-]*",
             "newValue": "{{parent-comment-id}}"
+        },
+        {
+            "oldValueRegex": "(?<=datasources\\/)[a-z0-9-]*",
+            "newValue": "{{datasource-id}}"
         }
     ]
 }
