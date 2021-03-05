@@ -139,6 +139,7 @@ module.exports.toInsomniaCollection = (determineFolder, allCurls, descriptions, 
     const resourceWrappers = allCurls.map(c => {
         return {
             path: c.path,
+            dir: c.dir,
             resource: importers.convert(c.curl).data.resources[0]
         }
     });
@@ -148,8 +149,16 @@ module.exports.toInsomniaCollection = (determineFolder, allCurls, descriptions, 
     const requestResources = resourceWrappers.map((resourceWrapper, index) => {
         resourceWrapper.resource._id = `__REQ_${index + 1}__`;
 
-        if (descriptions) {
-            resourceWrapper.resource.description = allDescriptions[index];
+
+        for (let i = 0; i < allDescriptions.length; i++) {
+            let d = allDescriptions[i];
+
+            if (resourceWrapper.dir == d.dir) {
+                resourceWrapper.resource.description = d.description;
+
+                allDescriptions.splice(i, 1);
+                break;
+            }
         }
 
         if (namingConvention === 'dir') {

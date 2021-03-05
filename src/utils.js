@@ -68,11 +68,28 @@ const replacePathPartInPathArray = (urlParts, pathReplacement) => {
     return urlParts;
 }
 
+const replacePathPartInQuery = (query, pathReplacement) => {
+    const oldValueRegex = new RegExp(pathReplacement.oldValueRegex);
+
+    query.forEach(param => {
+        var paramString = `${param.key}=${param.value}`;
+        const match = paramString.match(oldValueRegex);
+        if (match) {
+            paramString = paramString.replace(match, pathReplacement.newValue);
+        }
+        query[query.indexOf(param)] = { key: paramString.split("=")[0], value: paramString.split("=")[1] }
+    });
+
+    return query;
+};
+
 module.exports.traverseFilesSync = traverseFilesSync;
 
 module.exports.caseInsensitiveEquals = (stringA, stringB) => {
     return stringA.toUpperCase() === stringB.toUpperCase();
 };
+
+module.exports.replacePathPartInQuery = replacePathPartInQuery;
 
 module.exports.replacePathPartInUrl = replacePathPartInUrl;
 
