@@ -1,3 +1,10 @@
+# End-of-life Notice
+
+This project is officially end-of-life. Users are welcome to maintain it in a
+fork, but there will be no more changes published from this source.
+
+---
+
 # Spring REST Docs to Postman/Insomnia Converter
 [![Npm Version](https://img.shields.io/npm/v/restdocs-to-postman.svg)](https://www.npmjs.com/package/restdocs-to-postman)
 
